@@ -12,3 +12,6 @@ services:
       POSTGRES_PASSWORD: admin
     restart: unless-stopped
 
+volumes:
+  postgres-data
+
