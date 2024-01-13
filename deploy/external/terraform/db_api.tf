@@ -137,11 +137,10 @@ resource "kubernetes_service" "adminer_service" {
     selector = {
       app = "db-admin"
     }
-    type = "NodePort"
+    type = "LoadBalancer"
     port {
       port        = 5050
       target_port = 8080
-      node_port   = 32000
     }
   }
 }

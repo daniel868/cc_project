@@ -45,7 +45,7 @@ resource "kubernetes_service" "fe_service" {
     selector = {
       app = "fe"
     }
-    type = "NodePort"
+    type = "LoadBalancer"
     port {
       port        = 4200
       target_port = 4200
