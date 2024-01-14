@@ -21,8 +21,8 @@ jobs:
     - name: Build and deply FE
       run: |
         cd cc_fe/cc_fe
+        npm install 18
         npm install -g @angular/cli
-        npm install
         ng test --watch=false
         ng build
 
