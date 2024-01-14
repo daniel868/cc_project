@@ -23,6 +23,7 @@ jobs:
         cd cc_fe
         npm install -g @angular/cli
         npm install
+        cd cc_fe
         ng build
 
     - name: Build Docker image for Microservice 1
