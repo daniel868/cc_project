@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql-auth
+  labels:
+    app: postgresql-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresql-auth
+  template:
+    metadata:
+      name: postgresql-auth
+      labels:
+        app: postgresql-auth
+    spec:
+      containers:
+        - name: postgresql-auth
+          image: postgres:10.4
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: postgres-volume-auth
+              mountPath: /etc/config
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: db-config-auth
+      restartPolicy: Always
+
+      volumes:
+        - name: postgres-volume-auth
+          persistentVolumeClaim:
+            claimName: postgres-pv-volume-auth

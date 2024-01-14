@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: business-logic-config
+data:
+  SPRING_PROFILES_ACTIVE: "k8s"
+  

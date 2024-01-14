@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: business-logic
+  labels:
+    app: business-logic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: business-logic
+  template:
+    metadata:
+      name: business-logic
+      labels:
+        app: business-logic
+    spec:
+      containers:
+        - name: business-logic
+          image: cristianaandrei/cc:business_logic2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: business-logic-config
+      restartPolicy: Always
+      

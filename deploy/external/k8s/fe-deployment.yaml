@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe
+  labels:
+    app: fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fe
+  template:
+    metadata:
+      name: fe
+      labels:
+        app: fe
+    spec:
+      containers:
+        - name: cc-fe
+          image: alexandrudaniel/cc_fe:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 4200
+      restartPolicy: Always
+      
