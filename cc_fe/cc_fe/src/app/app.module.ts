@@ -4,19 +4,32 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AuthComponent} from './auth/auth.component';
-import {FormsModule} from "@angular/forms";
-import { MainComponent } from './main/main.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MainComponent} from './main/main.component';
+import {AddRestaurantComponent} from './main/add-restaurant/add-restaurant.component';
+import {NgOptimizedImage} from "@angular/common";
+import { RestaurantItemComponent } from './main/restaurant-item/restaurant-item.component';
+import { RestaurantComponent } from './main/restaurant/restaurant.component';
+import { HeaderComponent } from './header/header.component';
+import {DropdownDirective} from "./dropdown.directive";
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    MainComponent
+    MainComponent,
+    AddRestaurantComponent,
+    RestaurantItemComponent,
+    RestaurantComponent,
+    HeaderComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgOptimizedImage
   ],
   providers: [],
   bootstrap: [AppComponent]

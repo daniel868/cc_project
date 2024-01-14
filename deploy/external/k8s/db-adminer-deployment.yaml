@@ -1,29 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kafka
+  name: db-admin
   labels:
-    app: kafka
+    app: db-admin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kafka
+      app: db-admin
   template:
     metadata:
-      name: kafka
+      name: db-admin
       labels:
-        app: kafka
+        app: db-admin
     spec:
-      hostname: kafka
       containers:
-        - name: kafka
-          image: bitnami/kafka
+        - name: db-admin
+          image: adminer:4.7.6-standalone
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 9092
+            - containerPort: 8080
           envFrom:
             - configMapRef:
-                name: kafka-config
+                name: db-adminer-configmap
       restartPolicy: Always
       

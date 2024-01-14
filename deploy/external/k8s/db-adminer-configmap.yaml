@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-adminer-configmap
+data:
+  ADMINER_DESIGN: "pepa-linha"
+  ADMINER_DEFAULT_SERVER: "postgres"
+  
