@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: admin
+    url: jdbc:postgresql://db-auth-service:5432/authdb
+    password: admin
+  session:
+    store-type: redis
+    redis:
+      namespace: spring:session
+  liquibase:
+    change-log: classpath:db/changelog/changelog.sql
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  security:
+    user:
+      name: admin
+      password: admin
+  data:
+    redis:
+      host: localhost
+      port: 6379
+jwt:
+  secretKey: ccsecret
+  expirationMs: 3600000
+  authorities:
+    key: roles

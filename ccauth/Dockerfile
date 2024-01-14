@@ -1,6 +1,11 @@
-FROM openjdk:11-jdk-slim as build
-VOLUME /tmp
+FROM openjdk:17
+
 EXPOSE 8080
-ARG JAR_FILE=target/*.jar
-ADD ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+
+RUN mkdir /usr/src/ccauth
+
+COPY target/ccauth-0.0.1-SNAPSHOT.jar /usr/src/ccauth
+
+WORKDIR /usr/src/ccath
+
+CMD ["java","-jar","ccauth-0.0.1-SNAPSHOT.jar"]
