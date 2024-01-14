@@ -20,7 +20,7 @@ jobs:
 
     - name: Build and deply FE
       run: |
-        cd microservices/microservice-1
+        cd cc_fe/cc_fe
         npm install -g @angular/cli
         npm install
         ng test --watch=false
@@ -28,7 +28,6 @@ jobs:
 
     - name: Build Docker image for Microservice 1
       run: |
-        cd cc_fe/cc_fe
         docker build -t alexandrudaniel/cc_fe:latest
 
     - name: Push Docker image to Docker Hub for Fe
