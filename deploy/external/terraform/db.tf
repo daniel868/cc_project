@@ -193,7 +193,7 @@ resource "kubernetes_deployment" "postgresql-auth" {
 
           env_from {
             config_map_ref {
-              name = "db-config"
+              name = "db-config-auth"
             }
           }
 
