@@ -27,6 +27,7 @@ jobs:
 
     - name: Build Docker image for fe
       run: |
+        cd cc_fe/cc_fe
         docker build -t alexandrudaniel/cc_fe:latest .
 
     - name: Push Docker image to Docker Hub for Fe
