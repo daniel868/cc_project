@@ -20,7 +20,7 @@ jobs:
 
     - name: Build and deply FE
       run: |
-        cd cc_fe/cc_fe
+        cd cc_fe
         npm install -g @angular/cli
         npm install
         ng build
