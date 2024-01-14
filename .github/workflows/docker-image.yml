@@ -1,4 +1,4 @@
-name: Dcoker FE 
+name: Docker FE
 
 on:
   push:
@@ -18,14 +18,14 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Build and deply FE
+    - name: Build and deploy FE
       run: |
         cd cc_fe/cc_fe
         npm install -g @angular/cli
         npm install
         ng build
 
-    - name: Build Docker image for Microservice 1
+    - name: Build Docker image for fe
       run: |
         docker build -t alexandrudaniel/cc_fe:latest .
 
