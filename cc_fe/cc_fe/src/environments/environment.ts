@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  business_base_url: 'http://business-logic-service:8082/'
+  business_base_url: 'http://localhost:4200/business'
 };
 
 /*

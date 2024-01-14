@@ -1,0 +1,10 @@
+{
+  "/business": {
+    "target": "http://business-logic-service:8082/",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/business": ""
+    }
+  }
+}
