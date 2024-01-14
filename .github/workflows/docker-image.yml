@@ -27,7 +27,7 @@ jobs:
 
     - name: Build Docker image for Microservice 1
       run: |
-        docker build -t alexandrudaniel/cc_fe:latest
+        docker build -t alexandrudaniel/cc_fe:latest .
 
     - name: Push Docker image to Docker Hub for Fe
       run: |
