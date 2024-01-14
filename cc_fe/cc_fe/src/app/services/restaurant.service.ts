@@ -12,7 +12,7 @@ export class RestaurantService {
   }
 
   public getRestaurants(): Observable<any> {
-    let url = environment.business_base_url + 'restaurants'
+    let url = environment.business_base_url + '/restaurants'
     return this.httpClient.get(url)
   }
 }
