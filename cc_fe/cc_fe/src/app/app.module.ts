@@ -8,10 +8,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MainComponent} from './main/main.component';
 import {AddRestaurantComponent} from './main/add-restaurant/add-restaurant.component';
 import {NgOptimizedImage} from "@angular/common";
-import { RestaurantItemComponent } from './main/restaurant-item/restaurant-item.component';
-import { RestaurantComponent } from './main/restaurant/restaurant.component';
-import { HeaderComponent } from './header/header.component';
+import {RestaurantItemComponent} from './main/restaurant-item/restaurant-item.component';
+import {RestaurantComponent} from './main/restaurant/restaurant.component';
+import {HeaderComponent} from './header/header.component';
 import {DropdownDirective} from "./dropdown.directive";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {DropdownDirective} from "./dropdown.directive";
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     NgOptimizedImage
   ],
   providers: [],

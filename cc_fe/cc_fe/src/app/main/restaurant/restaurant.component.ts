@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Restaurant} from "../../model/restaurant";
+import {RestaurantService} from "../../services/restaurant.service";
 
 @Component({
   selector: 'app-restaurant',
@@ -19,10 +20,14 @@ export class RestaurantComponent implements OnInit {
       'location_test')
   ]
 
-  constructor() {
+  constructor(private restaurantService: RestaurantService) {
   }
 
   ngOnInit(): void {
+    this.restaurantService.getRestaurants()
+      .subscribe((response) => {
+        console.log(response)
+      });
   }
 
 }
