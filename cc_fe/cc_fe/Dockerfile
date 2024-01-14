@@ -8,7 +8,7 @@ RUN npm install -g @angular/cli
 
 RUN npm install
 
-CMD ["ng", "serve"," --proxy-config proxy.conf.json", "--host", "0.0.0.0"]
+CMD ["ng", "serve","--proxy-config", "proxy.conf.json", "--host", "0.0.0.0"]
 
 #FROM nginx:latest
 #COPY --from=build /usr/local/app/dist/cc_fe /usr/share/nginx/html
