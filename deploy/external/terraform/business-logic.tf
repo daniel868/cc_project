@@ -35,7 +35,7 @@ resource "kubernetes_deployment" "business_logic" {
       spec {
         container {
           name  = "business-logic"
-          image = "cristianaandrei/cc:business_logic2"
+          image = "cristianaandrei/cc:business_logic2:latest"
 
           port {
             container_port = 8080
