@@ -6,6 +6,6 @@ RUN mkdir /usr/src/ccauth
 
 COPY target/ccauth-0.0.1-SNAPSHOT.jar /usr/src/ccauth
 
-WORKDIR /usr/src/ccath
+WORKDIR /usr/src/ccauth
 
 CMD ["java","-jar","ccauth-0.0.1-SNAPSHOT.jar"]
