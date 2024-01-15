@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthComponent} from "./auth/auth.component";
 import {MainComponent} from "./main/main.component";
 import {AddRestaurantComponent} from "./main/add-restaurant/add-restaurant.component";
+import {RestaurantComponent} from "./main/restaurant/restaurant.component";
 
 const routes: Routes = [
   {
@@ -19,8 +20,12 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {
-        path: 'change-restaurant',
+        path: 'add-restaurant',
         component: AddRestaurantComponent
+      },
+      {
+        path: 'restaurants',
+        component: RestaurantComponent
       }
     ]
   }
