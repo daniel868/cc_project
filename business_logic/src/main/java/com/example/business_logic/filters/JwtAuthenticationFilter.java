@@ -3,6 +3,8 @@ package com.example.business_logic.filters;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,10 +58,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean isTokenExpired(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secretKey)
+        Claims claims = Jwts.
+                parserBuilder()
+                .setSigningKey(generateSignInKey())
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getExpiration().before(new Date());
+    }
+
+    private Key generateSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 }

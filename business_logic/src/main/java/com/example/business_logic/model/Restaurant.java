@@ -1,9 +1,6 @@
 package com.example.business_logic.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "restaurant", schema = "restaurant_reservations")
@@ -23,6 +20,7 @@ public class Restaurant {
 
     private int maximumGuestNumber;
 
+    @Column(name = "image_url")
     private String imageUrl;
 
     public int getId() {
