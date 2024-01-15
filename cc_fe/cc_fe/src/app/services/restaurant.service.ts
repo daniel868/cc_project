@@ -25,7 +25,8 @@ export class RestaurantService {
       "owner": "Owner",
       "address": restaurant.address,
       "availableSpots": restaurant.availableSpots,
-      "maximumGuestNumber": restaurant.maximumGuestNumber
+      "maximumGuestNumber": restaurant.maximumGuestNumber,
+      "imageUrl": restaurant.imageUrl
     }
     return this.httpClient.post(url, body)
   }

@@ -1,6 +1,6 @@
 export class Restaurant {
   name: string = '';
-  url: string = '';
+  imageUrl: string = '';
   description: string = '';
   address: string = '';
   maximumGuestNumber: number = 0;
@@ -8,7 +8,7 @@ export class Restaurant {
 
   constructor(name: string, url: string, description: string, location: string) {
     this.name = name;
-    this.url = url;
+    this.imageUrl = url;
     this.description = description;
     this.address = location;
   }

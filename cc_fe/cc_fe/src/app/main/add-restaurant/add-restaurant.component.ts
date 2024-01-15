@@ -3,6 +3,7 @@ import {FormGroup} from "@angular/forms";
 import {RestaurantService} from "../../services/restaurant.service";
 import {Router} from "@angular/router";
 import {Restaurant} from "../../model/restaurant";
+import {map, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-add-restaurant',
@@ -27,21 +28,32 @@ export class AddRestaurantComponent implements OnInit {
   onSubmit() {
     let restaurant = new Restaurant(
       this.restaurantName,
-      '',
+      this.restaurantPictureUrl,
       this.restaurantDescription,
       this.restaurantAddress
     );
     restaurant.maximumGuestNumber = this.restaurantGuestNumber;
     restaurant.availableSpots = this.restaurantGuestNumber * 2;
-
-
+    this.restaurantService.getRestaurants()
+      .pipe(map((restaurants: Restaurant[]) => {
+          return restaurants.length
+        }),
+        switchMap(length => this.restaurantService.addRestaurant(length + 1, restaurant))
+      ).subscribe((response) => {
+      console.log("Restaurant Added: " + response);
+      this.router.navigate(['/main/restaurants']);
+    })
   }
+
 
   onCancel() {
     this.router.navigate(['/main'])
   }
 
-  onImageChange(value: string) {
+  onImageChange(value
+                  :
+                  string
+  ) {
     console.log("image chnageg")
     this.restaurantPictureUrl = value;
   }
