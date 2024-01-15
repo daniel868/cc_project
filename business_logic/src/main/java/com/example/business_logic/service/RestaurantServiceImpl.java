@@ -88,8 +88,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant addRestaurant(int id, String name, String owner, String address, int availableSpots, int maximumGuestNumber) {
-      return restaurantRepository.save(new Restaurant(id, name, owner, address, availableSpots, maximumGuestNumber));
+    public Restaurant addRestaurant(int id, String name, String owner, String address, int availableSpots, int maximumGuestNumber, String imageUrl) {
+      return restaurantRepository.save(new Restaurant(id, name, owner, address, availableSpots, maximumGuestNumber, imageUrl));
     }
 
     @Override

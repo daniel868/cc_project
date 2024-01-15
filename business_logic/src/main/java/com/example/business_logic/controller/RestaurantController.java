@@ -34,7 +34,7 @@ public class RestaurantController {
 
     @PostMapping(path = "/restaurants/add")
     public ResponseEntity<Restaurant> addNewRestaurant(@RequestBody Restaurant newRestaurant) {
-        Restaurant restaurant = restaurantService.addRestaurant(newRestaurant.getId(), newRestaurant.getName(), newRestaurant.getOwner(), newRestaurant.getAddress(), newRestaurant.getAvailableSpots(), newRestaurant.getMaximumGuestNumber());
+        Restaurant restaurant = restaurantService.addRestaurant(newRestaurant.getId(), newRestaurant.getName(), newRestaurant.getOwner(), newRestaurant.getAddress(), newRestaurant.getAvailableSpots(), newRestaurant.getMaximumGuestNumber(), newRestaurant.getImageUrl());
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 

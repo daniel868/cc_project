@@ -15,7 +15,7 @@ public interface RestaurantService {
     int getAvailableSpots(String name);
 
     void updateAvailableSpots(String name, int newAvailableSpots);
-    Restaurant addRestaurant(int id, String name, String owner, String address, int availableSpots, int maximumGuestNumber);
+    Restaurant addRestaurant(int id, String name, String owner, String address, int availableSpots, int maximumGuestNumber, String imageUrl);
     Long deleteRestaurantByName(String name);
     }
 

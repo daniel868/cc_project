@@ -23,8 +23,18 @@ public class Restaurant {
 
     private int maximumGuestNumber;
 
+    private String imageUrl;
+
     public int getId() {
         return id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public void setId(int id) {
@@ -74,12 +84,13 @@ public class Restaurant {
     public Restaurant() {
     }
 
-    public Restaurant(int id, String name, String owner, String address, int availableSpots, int maximumGuestNumber) {
+    public Restaurant(int id, String name, String owner, String address, int availableSpots, int maximumGuestNumber, String imageUrl) {
         this.id = id;
         this.name = name;
         this.owner = owner;
         this.address = address;
         this.availableSpots = availableSpots;
         this.maximumGuestNumber = maximumGuestNumber;
+        this.imageUrl = imageUrl;
     }
 }
