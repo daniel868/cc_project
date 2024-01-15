@@ -14,6 +14,7 @@ import {HeaderComponent} from './header/header.component';
 import {DropdownDirective} from "./dropdown.directive";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { LoginComponent } from './login/login.component';
+import { ReservationComponent } from './main/reservation/reservation.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoginComponent } from './login/login.component';
     RestaurantComponent,
     HeaderComponent,
     DropdownDirective,
-    LoginComponent
+    LoginComponent,
+    ReservationComponent
   ],
   imports: [
     BrowserModule,
