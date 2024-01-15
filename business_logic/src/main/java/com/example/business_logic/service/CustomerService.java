@@ -19,7 +19,7 @@ public class CustomerService {
     }
 
     public List<Customer> findByName(String name) {
-        System.out.println("Getting customer {} from the repository." + name);
+        System.out.println("Getting customer {} from the repository" + name);
 
         Iterator<Customer> customerIt = customerRepository.findAll().iterator();
         List<Customer> customerList = new ArrayList<>();
