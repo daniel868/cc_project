@@ -10,9 +10,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "db_microservice" ]
+    branches: ["db_microservice"]
   pull_request:
-    branches: [ "db_microservice" ]
+    branches: ["db_microservice"]
 
 jobs:
   build:
