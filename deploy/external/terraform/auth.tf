@@ -35,7 +35,7 @@ resource "kubernetes_deployment" "auth" {
       spec {
         container {
           name  = "auth"
-          image = "alexandrudaniel/ccauth:latest"
+          image = "silviadragan/ccauth2:latest"
 
           port {
             container_port = 8080
