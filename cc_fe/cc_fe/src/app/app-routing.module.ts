@@ -7,6 +7,7 @@ import {RestaurantComponent} from "./main/restaurant/restaurant.component";
 import {LoginComponent} from "./login/login.component";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {TokenInterceptor} from "./token-interceptor.interceptor";
+import {AuthGuard} from "./common/auth.guard";
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
   {
     path: 'main',
     component: MainComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'add-restaurant',
