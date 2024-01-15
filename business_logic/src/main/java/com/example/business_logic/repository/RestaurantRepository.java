@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface RestaurantRepository extends CrudRepository<Restaurant, Integer> {
     List<Restaurant> findByName(String name);
+    Long deleteByName(String name);
 }

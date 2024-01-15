@@ -38,4 +38,12 @@ public class RestaurantController {
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 
+    @PostMapping("/restaurants/{name}/delete")
+    public Restaurant deleteRestaurantByName(@PathVariable String name) {
+        System.out.println("Getting restaurant by name " + name);
+        Restaurant restaurant = restaurantService.selectRestaurant(name);
+        System.out.println("Received restaurant by name " + restaurant.getName());
+        return restaurant;
+    }
+
 }

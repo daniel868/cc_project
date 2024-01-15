@@ -40,4 +40,16 @@ public class ReservationController {
         }
         return new ResponseEntity<>(reservation, HttpStatus.CREATED);
     }
+
+    @PostMapping(path = "/reservations/{name}/delete")
+    public ResponseEntity<Reservation> deleteReservation(@PathVariable String name, @RequestBody Reservation newReservation) {
+        int availableSpots = restaurantService.getAvailableSpots(name);
+        Reservation reservation = new Reservation();
+        if (availableSpots >= newReservation.getGuestNumber()) {
+            System.out.println("Date is " + newReservation.getReservationDate());
+            reservation = reservationService.makeReservation(newReservation);
+            restaurantService.updateAvailableSpots(name, availableSpots - newReservation.getGuestNumber());
+        }
+        return new ResponseEntity<>(reservation, HttpStatus.CREATED);
+    }
 }

@@ -92,4 +92,9 @@ public class RestaurantServiceImpl implements RestaurantService {
       return restaurantRepository.save(new Restaurant(id, name, owner, address, availableSpots, maximumGuestNumber));
     }
 
+    @Override
+    public Long deleteRestaurantByName(String name) {
+        return restaurantRepository.deleteByName(name);
+    }
+
 }

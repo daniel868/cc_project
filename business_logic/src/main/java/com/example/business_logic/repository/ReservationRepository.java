@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ReservationRepository extends CrudRepository<Reservation, Integer> {
     List<Reservation> findByRestaurantId(int id);
+
 }
