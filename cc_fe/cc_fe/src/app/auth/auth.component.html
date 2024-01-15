@@ -1,25 +1,25 @@
 <div class="row">
   <div class="col-12 col-md-4 offset-md-3">
-    <form>
-      <div class="form-group" id="div-name">
-        <label for="name">Name</label>
+    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+      <div class="form-group">
+        <label for="username">Username</label>
         <input class="form-control"
-               id="name"
-               name="name"
+               id="username"
+               name="username"
+               required
                ngModel
         >
       </div>
-
       <div class="form-group">
-        <label for="email">Email or username</label>
-        <input class="form-control"
+        <label for="email">Email</label>
+        <input type="email"
+               class="form-control"
                id="email"
                name="email"
                required
                ngModel
         >
       </div>
-
       <div class="form-group">
         <label for="password">Password</label>
         <input class="form-control"
@@ -31,26 +31,45 @@
                ngModel
         >
       </div>
-
+      <div class="form-group">
+        <label for="firstname">First Name</label>
+        <input class="form-control"
+               id="firstname"
+               name="firstname"
+               required
+               ngModel
+        >
+      </div>
+      <div class="form-group">
+        <label for="lastname">Last Name</label>
+        <input class="form-control"
+               id="lastname"
+               name="lastname"
+               required
+               ngModel
+        >
+      </div>
+      <div class="form-group">
+        <label for="type">Type</label>
+        <input class="form-control"
+               id="type"
+               name="type"
+               required
+               ngModel
+        >
+      </div>
       <div class="mt-3">
         <button class="btn btn-primary login-btn"
-                type="submit"
-        >
+                type="button"
+                (click)="navigateToLogin()">
           Login
-          <!--          {{ isLogin ? 'Login' : 'Register'}}-->
         </button>
         <button class="btn register-btn"
-                type="button"
+                type="submit"
         >
           Register
-          <!--          Switch to {{ isLogin ? 'Register' : 'Login'}}-->
         </button>
       </div>
-
     </form>
   </div>
 </div>
-
-<!--<ng-template #errorModal>-->
-<!--  <app-error [errorMessage]="errorMessage"></app-error>-->
-<!--</ng-template>-->

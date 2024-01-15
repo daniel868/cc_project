@@ -13,6 +13,7 @@ import {RestaurantComponent} from './main/restaurant/restaurant.component';
 import {HeaderComponent} from './header/header.component';
 import {DropdownDirective} from "./dropdown.directive";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     RestaurantItemComponent,
     RestaurantComponent,
     HeaderComponent,
-    DropdownDirective
+    DropdownDirective,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

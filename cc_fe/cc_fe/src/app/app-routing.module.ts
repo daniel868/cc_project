@@ -4,6 +4,9 @@ import {AuthComponent} from "./auth/auth.component";
 import {MainComponent} from "./main/main.component";
 import {AddRestaurantComponent} from "./main/add-restaurant/add-restaurant.component";
 import {RestaurantComponent} from "./main/restaurant/restaurant.component";
+import {LoginComponent} from "./login/login.component";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {TokenInterceptor} from "./token-interceptor.interceptor";
 
 const routes: Routes = [
   {
@@ -14,6 +17,10 @@ const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'main',
@@ -33,7 +40,14 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ]
 })
 export class AppRoutingModule {
 }
