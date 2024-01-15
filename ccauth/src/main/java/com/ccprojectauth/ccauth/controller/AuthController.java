@@ -41,6 +41,7 @@ public class AuthController {
 
 
     @PostMapping("/login")
+    @ResponseBody
     public ResponseEntity<?> authenticate(@RequestBody AuthRequest authenticationRequest) {
         try {
             // Authenticate credentials
@@ -62,6 +63,7 @@ public class AuthController {
         }
     }
     @PostMapping("/signup")
+    @ResponseBody
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest request) {
         try {
             // Check if username is already taken
@@ -88,8 +90,7 @@ public class AuthController {
             // Register the user
             userService.registerUser(user);
 
-            // Return the registered user with a success message
-            return ResponseEntity.ok().body("User registered successfully");
+            return ResponseEntity.ok(new SignupResponse(true, "User registered successfully", null));
         } catch (Exception ex) {
             logger.error("error sign up");
             return ResponseEntity.internalServerError().body("error");

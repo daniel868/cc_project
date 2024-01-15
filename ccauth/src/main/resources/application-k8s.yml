@@ -28,7 +28,7 @@ spring:
       host: localhost
       port: 6379
 jwt:
-  secretKey: ccsecret
+  secretKey: Bl/xQ/STR9yQO4A7dXoYdN5konRL9nCyPjY2AIYMhzMBfOzByY25fp+WMsOdmflAl5WgXjrHRCtU9CfeYCntyw==
   expirationMs: 3600000
   authorities:
     key: roles
