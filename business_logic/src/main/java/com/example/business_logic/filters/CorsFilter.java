@@ -54,6 +54,7 @@ public class CorsFilter implements Filter {
         headers.add("Pragma");
         headers.add("Expires");
         headers.add("If-Modified-Since");
+        headers.add("Authorization");
 
 
         Enumeration<String> headerNames = request.getHeaderNames();
