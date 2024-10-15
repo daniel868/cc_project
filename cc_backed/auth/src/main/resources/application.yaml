@@ -1,5 +1,8 @@
 jwt:
   secretKey: Bl/xQ/STR9yQO4A7dXoYdN5konRL9nCyPjY2AIYMhzMBfOzByY25fp+WMsOdmflAl5WgXjrHRCtU9CfeYCntyw==
+  expirationMs: 3600000
+  authorities:
+    key: roles
 
 logging:
   level:
@@ -23,4 +26,4 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
 
 server:
-  port: 9002
+  port: 9001

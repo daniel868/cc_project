@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  business_base_url: 'http://business-logic-service:8082',
-  register_url: 'http://auth-service:8081/api/auth/signup',
-  login_url:'http://auth-service:8081/api/auth/login'
+  business_base_url: 'http://localhost:9002',
+  register_url: 'http://localhost:9001/api/auth/signup',
+  login_url: 'http://localhost:9001/api/auth/login'
 };
 
 /*

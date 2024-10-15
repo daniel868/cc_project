@@ -10,7 +10,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-@Table(name = "reservation", schema = "restaurant_reservations")
+@Table(name = "reservation")
 public class Reservation {
     @Id
     private int id;

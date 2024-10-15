@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "restaurant", schema = "restaurant_reservations")
+@Table(name = "restaurant")
 public class Restaurant {
     @Id
     //@GeneratedValue(strategy = GenerationType.AUTO)

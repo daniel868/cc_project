@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "customer", schema = "restaurant_reservations")
+@Table(name = "customer")
 public class Customer {
     @Id
     //@GeneratedValue(strategy = GenerationType.AUTO)
