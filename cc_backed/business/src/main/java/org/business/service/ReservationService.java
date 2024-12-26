@@ -9,6 +9,7 @@ import java.util.List;
 public interface ReservationService {
     List<ReservationDto> getAllReservations(Pageable pageable);
 
-    Reservation createReservation(Integer customerId,
-                                  ReservationDto newReservation);
+    ReservationDto createReservation(Integer customerId,
+                                     Integer restaurantId,
+                                     ReservationDto newReservation);
 }

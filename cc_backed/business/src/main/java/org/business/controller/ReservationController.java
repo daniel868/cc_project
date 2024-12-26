@@ -2,7 +2,8 @@ package org.business.controller;
 
 import org.business.model.*;
 import org.business.pojo.ReservationDto;
-import org.business.pojo.generic.GenericResponse;
+import org.business.utils.AppUtils;
+import org.business.utils.GenericResponse;
 import org.business.service.ReservationService;
 import org.business.service.ReservationServiceImpl;
 import org.business.service.RestaurantService;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,28 +35,17 @@ public class ReservationController {
         return reservationService.getAllReservations(pageable);
     }
 
-    @PostMapping(path = "/reservations/{customerId}")
-    public GenericResponse<?> addNewReservation(@PathVariable Integer customerId,
-                                                @RequestBody ReservationDto newReservation) {
-        Reservation reservation = new Reservation();
-        if (newReservation >= newReservation.getGuestCount()) {
-            logger.debug("Date is {}", newReservation.getReservationDate());
-            reservation = reservationService.createReservation(newReservation);
-            restaurantService.updateAvailableSpots(newReservation.getRestaurantName(),
-                    availableSpots - newReservation.getGuestCount());
-        }
-        return new GenericResponse<>();
+    @PostMapping(path = "/reservations/{restaurantId}/{customerId}")
+    public ResponseEntity<ReservationDto> addNewReservation(@PathVariable Integer restaurantId,
+                                                            @PathVariable(required = false) Integer customerId,
+                                                            @RequestBody ReservationDto newReservation) {
+        ReservationDto reservation = reservationService.createReservation(customerId, restaurantId, newReservation);
+        return ResponseEntity.ok()
+                .body(reservation);
     }
 
     @DeleteMapping(path = "/reservations/{reservationId}/delete")
-    public GenericResponse<?> deleteReservation(@PathVariable Integer reservationId) {
-        int availableSpots = restaurantService.getAvailableSpots(name);
-        Reservation reservation = new Reservation();
-        if (availableSpots >= newReservation.getGuestCount()) {
-            System.out.println("Date is " + newReservation.getReservationDate());
-            reservation = reservationService.createReservation(newReservation);
-            restaurantService.updateAvailableSpots(name, availableSpots - newReservation.getGuestCount());
-        }
-        return new GenericResponse<>();
+    public ResponseEntity<Boolean> deleteReservation(@PathVariable Integer reservationId) {
+
     }
 }

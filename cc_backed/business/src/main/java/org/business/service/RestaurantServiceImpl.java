@@ -33,13 +33,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantList;
     }
 
-    @Override
-    public Integer getAvailableSpots(Integer re) {
-        List<Restaurant> restaurantList = restaurantRepository.findByName(name);
-
-
-        return 0;
-    }
 
     @Override
     public void updateAvailableSpots(Integer restaurantId,
@@ -53,7 +46,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant addRestaurant(int id, String name, String owner, String address, int availableSpots, int maximumGuestNumber, String imageUrl) {
-        return restaurantRepository.save(new Restaurant(id, name, owner, address, availableSpots, maximumGuestNumber, imageUrl));
+        return restaurantRepository.save(new Restaurant());
     }
 
     @Override

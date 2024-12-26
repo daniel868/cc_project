@@ -1,4 +1,4 @@
-package org.business.pojo.generic;
+package org.business.utils;
 
 import lombok.Getter;
 import lombok.Setter;

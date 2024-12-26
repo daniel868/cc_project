@@ -16,12 +16,13 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "reservation_sequence_generator")
     private int id;
 
-    @Column(name = "customer_id")
-    private int customerId;
+    @JoinColumn(name = "customer_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Customer customer;
 
-    private int restaurantId;
+    private int guestCount;
 
-    private int availableGuestSize;
+    private String guestName;
 
     private Date reservationDate;
 
