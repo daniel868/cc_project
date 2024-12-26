@@ -1,88 +1,28 @@
 package org.business.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Date;
 
 @Entity
 @Table(name = "reservation")
+@Getter
+@Setter
 public class Reservation {
     @Id
+    @SequenceGenerator(name = "reservation_sequence_generator", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "reservation_sequence_generator")
     private int id;
 
+    @Column(name = "customer_id")
     private int customerId;
 
     private int restaurantId;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Column(name = "reservation_date")
+    private int availableGuestSize;
+
     private Date reservationDate;
 
-    private Time reservationTime;
-
-    private int guestNumber;
-
-    public Reservation(int id, int customerId, int restaurantId, Date reservationDate, Time reservationTime, int guestNumber) {
-        this.id = id;
-        this.customerId = customerId;
-        this.restaurantId = restaurantId;
-        this.reservationDate = reservationDate;
-        this.reservationTime = reservationTime;
-        this.guestNumber = guestNumber;
-    }
-
-    public Reservation() {}
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public int getRestaurantId() {
-        return restaurantId;
-    }
-
-    public void setRestaurantId(int restaurantId) {
-        this.restaurantId = restaurantId;
-    }
-
-    public Date getReservationDate() {
-        return reservationDate;
-    }
-
-    public void setReservationDate(Date reservationDate) {
-        this.reservationDate = reservationDate;
-    }
-
-    public Time getReservationTime() {
-        return reservationTime;
-    }
-
-    public void setReservationTime(Time reservationTime) {
-        this.reservationTime = reservationTime;
-    }
-
-    public int getGuestNumber() {
-        return guestNumber;
-    }
-
-    public void setGuestNumber(int guestNumber) {
-        this.guestNumber = guestNumber;
-    }
 }

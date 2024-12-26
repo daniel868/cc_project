@@ -24,14 +24,6 @@ public class RestaurantController {
         return restaurantList;
     }
 
-    @GetMapping("/restaurants/{name}")
-    public Restaurant getRestaurantByName(@PathVariable String name) {
-        System.out.println("Getting restaurant by name " + name);
-        Restaurant restaurant = restaurantService.selectRestaurant(name);
-        System.out.println("Received restaurant by name " + restaurant.getName());
-        return restaurant;
-    }
-
     @PostMapping(path = "/restaurants/add")
     public ResponseEntity<Restaurant> addNewRestaurant(@RequestBody Restaurant newRestaurant) {
         Restaurant restaurant = restaurantService.addRestaurant(newRestaurant.getId(), newRestaurant.getName(), newRestaurant.getOwner(), newRestaurant.getAddress(), newRestaurant.getAvailableSpots(), newRestaurant.getMaximumGuestNumber(), newRestaurant.getImageUrl());

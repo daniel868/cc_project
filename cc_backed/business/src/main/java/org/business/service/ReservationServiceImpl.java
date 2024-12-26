@@ -1,5 +1,7 @@
 package org.business.service;
 
+import org.business.pojo.ReservationDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import org.business.model.Reservation;
@@ -23,36 +25,16 @@ public class ReservationServiceImpl implements ReservationService {
     final RestaurantRepository restaurantRepository;
 
     @Override
-    public List<Reservation> getAllReservations() {
-        Iterator<Reservation> reservationIt = reservationRepository.findAll().iterator();
-        List<Reservation> reservationList = new ArrayList<>();
-
-        for (Iterator<Reservation> it = reservationIt; it.hasNext(); ) {
-            Reservation reservation = it.next();
-            reservationList.add(reservation);
-        }
-
-        for (Reservation reservation : reservationList) {
-            System.out.println("Got reservation: " + reservation.getId());
-        }
-
-        return reservationList;
+    public List<ReservationDto> getAllReservations(Pageable pageable) {
+        return reservationRepository.findAll(pageable)
+                .map(reservation -> new ReservationDto())
+                .stream().toList();
     }
 
     @Override
-    public List<Reservation> findReservationByRestaurantName(String name) {
-        List<Restaurant> restaurantList = restaurantRepository.findByName(name);
-        int restaurantId = 0;
-        for (Restaurant restaurant : restaurantList) {
-            if (restaurant.getName().equals(name)) {
-                restaurantId = restaurant.getId();
-            }
-        }
-        return reservationRepository.findByRestaurantId(restaurantId);
-    }
-
-    @Override
-    public Reservation makeReservation(Reservation newReservation) {
+    public Reservation createReservation(Integer customerId,
+                                         ReservationDto reservationDto) {
+        Reservation newReservation = new Reservation();
         return reservationRepository.save(newReservation);
     }
 

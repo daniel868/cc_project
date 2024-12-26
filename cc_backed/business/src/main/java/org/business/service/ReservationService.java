@@ -1,13 +1,14 @@
 package org.business.service;
 
 import org.business.model.*;
+import org.business.pojo.ReservationDto;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface ReservationService {
-    List<Reservation> getAllReservations();
+    List<ReservationDto> getAllReservations(Pageable pageable);
 
-    List<Reservation> findReservationByRestaurantName(String name);
-
-    Reservation makeReservation(Reservation newReservation);
+    Reservation createReservation(Integer customerId,
+                                  ReservationDto newReservation);
 }

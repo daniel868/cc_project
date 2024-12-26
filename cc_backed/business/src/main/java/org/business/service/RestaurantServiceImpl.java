@@ -34,56 +34,21 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant selectRestaurant(String name) {
+    public Integer getAvailableSpots(Integer re) {
         List<Restaurant> restaurantList = restaurantRepository.findByName(name);
 
-        for (Restaurant restaurant : restaurantList) {
-            if (restaurant.getName().equals(name)) {
-                return restaurant;
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public int getMaxGuestNumber(String name) {
-        List<Restaurant> restaurantList = restaurantRepository.findByName(name);
-
-        for (Restaurant restaurant : restaurantList) {
-            if (restaurant.getName().equals(name)) {
-                return restaurant.getMaximumGuestNumber();
-            }
-        }
 
         return 0;
     }
 
     @Override
-    public int getAvailableSpots(String name) {
-        List<Restaurant> restaurantList = restaurantRepository.findByName(name);
-
-        for (Restaurant restaurant : restaurantList) {
-            if (restaurant.getName().equals(name)) {
-                return restaurant.getAvailableSpots();
-            }
-        }
-
-        return 0;
-    }
-
-    @Override
-    public void updateAvailableSpots(String name, int newAvailableSpots) {
-        List<Restaurant> restaurantList = restaurantRepository.findByName(name);
-
-        for (Restaurant restaurant : restaurantList) {
-            if (restaurant.getName().equals(name)) {
-                restaurant.setAvailableSpots(newAvailableSpots);
-                restaurantRepository.save(restaurant);
-                break;
-            }
-        }
-
+    public void updateAvailableSpots(Integer restaurantId,
+                                     Integer newAvailableSpots) {
+        restaurantRepository.findById(restaurantId)
+                .ifPresent(currentRestaurant -> {
+                    currentRestaurant.setAvailableSpots(newAvailableSpots);
+                    restaurantRepository.save(currentRestaurant);
+                });
     }
 
     @Override

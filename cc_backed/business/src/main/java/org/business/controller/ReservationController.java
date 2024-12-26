@@ -1,8 +1,15 @@
 package org.business.controller;
 
 import org.business.model.*;
+import org.business.pojo.ReservationDto;
+import org.business.pojo.generic.GenericResponse;
+import org.business.service.ReservationService;
 import org.business.service.ReservationServiceImpl;
+import org.business.service.RestaurantService;
 import org.business.service.RestaurantServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,44 +18,43 @@ import java.util.List;
 
 @RestController
 public class ReservationController {
-    final ReservationServiceImpl reservationService;
+    private static final Logger logger = LoggerFactory.getLogger(ReservationController.class);
+
+    private final ReservationService reservationService;
+    private final RestaurantService restaurantService;
 
     public ReservationController(ReservationServiceImpl reservationService, RestaurantServiceImpl restaurantService) {
         this.reservationService = reservationService;
         this.restaurantService = restaurantService;
     }
 
-    final RestaurantServiceImpl restaurantService;
-
     @GetMapping("/reservations")
-    public List<Restaurant> getAllReservations() {
-        System.out.println("Getting all reservations ");
-        List restaurantList = reservationService.getAllReservations();
-        System.out.println("Received all reservations " + restaurantList.size());
-        return restaurantList;
+    public List<ReservationDto> getAllReservations(Pageable pageable) {
+        return reservationService.getAllReservations(pageable);
     }
 
-    @PostMapping(path = "/reservations/{name}/add")
-    public ResponseEntity<Reservation> addNewReservation(@PathVariable String name, @RequestBody Reservation newReservation) {
-        int availableSpots = restaurantService.getAvailableSpots(name);
+    @PostMapping(path = "/reservations/{customerId}")
+    public GenericResponse<?> addNewReservation(@PathVariable Integer customerId,
+                                                @RequestBody ReservationDto newReservation) {
         Reservation reservation = new Reservation();
-        if (availableSpots >= newReservation.getGuestNumber()) {
-            System.out.println("Date is " + newReservation.getReservationDate());
-            reservation = reservationService.makeReservation(newReservation);
-            restaurantService.updateAvailableSpots(name, availableSpots - newReservation.getGuestNumber());
+        if (newReservation >= newReservation.getGuestCount()) {
+            logger.debug("Date is {}", newReservation.getReservationDate());
+            reservation = reservationService.createReservation(newReservation);
+            restaurantService.updateAvailableSpots(newReservation.getRestaurantName(),
+                    availableSpots - newReservation.getGuestCount());
         }
-        return new ResponseEntity<>(reservation, HttpStatus.CREATED);
+        return new GenericResponse<>();
     }
 
-    @PostMapping(path = "/reservations/{name}/delete")
-    public ResponseEntity<Reservation> deleteReservation(@PathVariable String name, @RequestBody Reservation newReservation) {
+    @DeleteMapping(path = "/reservations/{reservationId}/delete")
+    public GenericResponse<?> deleteReservation(@PathVariable Integer reservationId) {
         int availableSpots = restaurantService.getAvailableSpots(name);
         Reservation reservation = new Reservation();
-        if (availableSpots >= newReservation.getGuestNumber()) {
+        if (availableSpots >= newReservation.getGuestCount()) {
             System.out.println("Date is " + newReservation.getReservationDate());
-            reservation = reservationService.makeReservation(newReservation);
-            restaurantService.updateAvailableSpots(name, availableSpots - newReservation.getGuestNumber());
+            reservation = reservationService.createReservation(newReservation);
+            restaurantService.updateAvailableSpots(name, availableSpots - newReservation.getGuestCount());
         }
-        return new ResponseEntity<>(reservation, HttpStatus.CREATED);
+        return new GenericResponse<>();
     }
 }
