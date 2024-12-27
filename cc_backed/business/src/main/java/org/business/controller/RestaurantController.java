@@ -34,7 +34,8 @@ public class RestaurantController {
     @PutMapping("/{restaurantId}")
     public ResponseEntity<Boolean> updateRestaurant(@RequestBody RestaurantDto restaurantDto,
                                                     @PathVariable Integer restaurantId) {
-
+        boolean response = restaurantService.manageRestaurants(HttpMethod.PUT, restaurantId, restaurantDto);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{restaurantId}")

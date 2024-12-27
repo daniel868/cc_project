@@ -1,10 +1,9 @@
 package org.business.service;
 
 import org.business.exceptions.NotEnoughSpotsException;
-import org.business.model.Customer;
 import org.business.pojo.ReservationDto;
-import org.business.pojo.RestaurantDto;
-import org.business.repository.CustomerRepository;
+import org.service.customer.model.Customer;
+import org.service.customer.repository.CustomerRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -14,8 +13,6 @@ import org.business.model.Restaurant;
 import org.business.repository.ReservationRepository;
 import org.business.repository.RestaurantRepository;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service

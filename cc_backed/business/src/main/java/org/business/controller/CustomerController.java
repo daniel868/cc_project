@@ -1,34 +1,44 @@
 package org.business.controller;
 
-import org.business.model.*;
-import org.business.service.CustomerService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.business.service.DelegateCustomerService;
+import org.service.customer.pojo.CustomerDto;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/customers")
 public class CustomerController {
-    final CustomerService customerService;
+    private final DelegateCustomerService customerService;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(DelegateCustomerService customerService) {
         this.customerService = customerService;
     }
 
-    @GetMapping("/customers/{name}")
-    public List<Customer> getCustomerByName(@PathVariable String name) {
-        System.out.println("Getting customer by name " + name);
-        List customerList = customerService.findByName(name);
-        System.out.println("Received customers by name " + customerList.size() + " " + name);
-        return customerList;
+    @GetMapping("")
+    public List<CustomerDto> getAllCustomers(Pageable pageable) {
+        return customerService.viewCustomers(pageable);
     }
 
-    @GetMapping("/customers/")
-    public List<Customer> getAllCustomers() {
-        System.out.println("Getting all customer by name ");
-        List customerList = customerService.findAll();
-        return customerList;
+    @PostMapping("")
+    public ResponseEntity<CustomerDto> addNewCustomer(@RequestBody CustomerDto customerDto) {
+        CustomerDto response = customerService.newCustomerRequests(customerDto);
+        return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/{customerId}")
+    public ResponseEntity<Boolean> updateCustomer(@PathVariable Integer customerId,
+                                                  @RequestBody CustomerDto customerDto) {
+        boolean response = customerService.manageCustomers(HttpMethod.PUT, customerId, customerDto);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{customerId}")
+    public ResponseEntity<Boolean> deleteCustomer(@PathVariable Integer customerId) {
+        boolean response = customerService.manageCustomers(HttpMethod.DELETE, customerId, null);
+        return ResponseEntity.ok(response);
+    }
 }
