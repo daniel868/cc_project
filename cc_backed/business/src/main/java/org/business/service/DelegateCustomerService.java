@@ -1,8 +1,6 @@
 package org.business.service;
 
-import org.service.customer.model.Customer;
 import org.service.customer.pojo.CustomerDto;
-import org.service.customer.repository.CustomerRepository;
 import org.service.customer.CustomerService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;

@@ -3,6 +3,8 @@ package org.service.customer;
 import org.service.customer.model.Customer;
 import org.service.customer.pojo.CustomerDto;
 import org.service.customer.repository.CustomerRepository;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerDto> viewCustomers(Pageable pageable) {
+        Page<Customer> page = customerRepository.findAll(pageable);
+        page.getTotalElements();
+        page.getTotalPages();
+
         return customerRepository.findAll(pageable)
                 .stream()
                 .map(customer ->

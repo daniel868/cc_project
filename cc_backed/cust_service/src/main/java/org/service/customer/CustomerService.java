@@ -7,7 +7,6 @@ import org.springframework.http.HttpMethod;
 import java.util.List;
 
 public interface CustomerService {
-
     List<CustomerDto> viewCustomers(Pageable pageable);
 
     CustomerDto newCustomerRequests(CustomerDto customerDto);
