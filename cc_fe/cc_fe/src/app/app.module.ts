@@ -13,8 +13,10 @@ import {RestaurantComponent} from './main/restaurant/restaurant.component';
 import {HeaderComponent} from './header/header.component';
 import {DropdownDirective} from "./dropdown.directive";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import { LoginComponent } from './login/login.component';
-import { ReservationComponent } from './main/reservation/reservation.component';
+import {LoginComponent} from './login/login.component';
+import {ReservationComponent} from './main/reservation/reservation.component';
+import {provideStore, StoreModule} from "@ngrx/store";
+import {appReducer} from "./common/state/app.reducer";
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { ReservationComponent } from './main/reservation/reservation.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    StoreModule.forRoot(appReducer)
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -26,23 +26,23 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   onSubmit() {
-    let restaurant = new Restaurant(
-      this.restaurantName,
-      this.restaurantPictureUrl,
-      this.restaurantDescription,
-      this.restaurantAddress
-    );
-    restaurant.maximumGuestNumber = this.restaurantGuestNumber;
-    restaurant.availableSpots = this.restaurantGuestNumber * 2;
-    this.restaurantService.getRestaurants()
-      .pipe(map((restaurants: Restaurant[]) => {
-          return restaurants.length
-        }),
-        switchMap(length => this.restaurantService.addRestaurant(length + 1, restaurant))
-      ).subscribe((response) => {
-      console.log("Restaurant Added: " + response);
-      this.router.navigate(['/main/restaurants']);
-    })
+    // let restaurant = new Restaurant(
+    //   this.restaurantName,
+    //   this.restaurantPictureUrl,
+    //   this.restaurantDescription,
+    //   this.restaurantAddress
+    // );
+    // restaurant.maximumGuestNumber = this.restaurantGuestNumber;
+    // restaurant.availableSpots = this.restaurantGuestNumber * 2;
+    // this.restaurantService.getRestaurants()
+    //   .pipe(map((restaurants: Restaurant[]) => {
+    //       return restaurants.length
+    //     }),
+    //     switchMap(length => this.restaurantService.addRestaurant(length + 1, restaurant))
+    //   ).subscribe((response) => {
+    //   console.log("Restaurant Added: " + response);
+    //   this.router.navigate(['/main/restaurants']);
+    // })
   }
 
 

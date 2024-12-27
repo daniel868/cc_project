@@ -1,4 +1,4 @@
-export interface Pageable<T> {
+export interface PageableGenericResponse<T> {
   payload: T[],
   currentPage: number,
   totalPageCount: number,
