@@ -1,5 +1,8 @@
 package org.business.service;
 
+import org.business.pojo.RestaurantDto;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.business.model.*;
 
@@ -8,12 +11,11 @@ import java.util.List;
 @Service
 public interface RestaurantService {
 
-    List<Restaurant> getAllRestaurants();
+    List<RestaurantDto> showAvailableRestaurants(Pageable pageable);
 
-    void updateAvailableSpots(Integer restaurantId,
-                              Integer newAvailableSpots);
+    RestaurantDto addNewRestaurant(RestaurantDto restaurantDto);
 
-    Restaurant addRestaurant(int id, String name, String owner, String address, int availableSpots, int maximumGuestNumber, String imageUrl);
-
-    Long deleteRestaurantByName(String name);
+    boolean manageRestaurants(HttpMethod method,
+                              Integer restaurantId,
+                              RestaurantDto restaurantDto);
 }

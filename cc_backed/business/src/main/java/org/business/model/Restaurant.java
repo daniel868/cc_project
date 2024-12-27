@@ -13,13 +13,11 @@ import java.util.Set;
 @Setter
 public class Restaurant {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    //@GeneratedValue(generator = "uuid")
+    @SequenceGenerator(name = "restaurant_id_sequence_generator", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "restaurant_id_sequence_generator")
     private int id;
 
     private String name;
-
-    private String owner;
 
     private String address;
 
@@ -40,6 +38,5 @@ public class Restaurant {
         }
         reservations.add(reservation);
     }
-
 
 }

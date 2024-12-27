@@ -1,7 +1,10 @@
 package org.business.controller;
 
 import org.business.model.*;
+import org.business.pojo.RestaurantDto;
 import org.business.service.RestaurantService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,32 +12,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/restaurants")
 public class RestaurantController {
-    final RestaurantService restaurantService;
+    private final RestaurantService restaurantService;
 
     public RestaurantController(RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
     }
 
-    @GetMapping("/restaurants")
-    public List<Restaurant> getAllRestaurants() {
-        System.out.println("Getting all restaurants ");
-        List restaurantList = restaurantService.getAllRestaurants();
-        System.out.println("Received all restaurants " + restaurantList.size());
-        return restaurantList;
+    @GetMapping("")
+    public List<RestaurantDto> getAllRestaurants(Pageable pageable) {
+        return restaurantService.showAvailableRestaurants(pageable);
     }
 
-    @PostMapping(path = "/restaurants/add")
-    public ResponseEntity<Restaurant> addNewRestaurant(@RequestBody Restaurant newRestaurant) {
-        Restaurant restaurant = restaurantService.addRestaurant(newRestaurant.getId(), newRestaurant.getName(), newRestaurant.getOwner(), newRestaurant.getAddress(), newRestaurant.getAvailableSpots(), newRestaurant.getMaximumGuestNumber(), newRestaurant.getImageUrl());
-        return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
+    @PostMapping(path = "")
+    public ResponseEntity<RestaurantDto> addNewRestaurant(@RequestBody RestaurantDto restaurantDto) {
+        RestaurantDto response = restaurantService.addNewRestaurant(restaurantDto);
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/restaurants/{id}")
-    public Restaurant deleteRestaurant(@PathVariable Integer restaurantId) {
-        System.out.println("Getting restaurant by name " + name);
-        Restaurant restaurant = restaurantService.selectRestaurant(name);
-        System.out.println("Received restaurant by name " + restaurant.getName());
-        return restaurant;
+    @PutMapping("/{restaurantId}")
+    public ResponseEntity<Boolean> updateRestaurant(@RequestBody RestaurantDto restaurantDto,
+                                                    @PathVariable Integer restaurantId) {
+
+    }
+
+    @DeleteMapping("/{restaurantId}")
+    public ResponseEntity<Boolean> deleteRestaurant(@PathVariable Integer restaurantId) {
+        boolean response = restaurantService.manageRestaurants(HttpMethod.DELETE, restaurantId, null);
+        return ResponseEntity.ok(response);
     }
 }

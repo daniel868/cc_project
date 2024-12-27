@@ -26,4 +26,6 @@ public class Reservation {
 
     private Date reservationDate;
 
+    private String restaurantName;
+
 }

@@ -1,56 +1,74 @@
 package org.business.service;
 
 import org.business.model.*;
+import org.business.pojo.RestaurantDto;
 import org.business.repository.RestaurantRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
-    final RestaurantRepository restaurantRepository;
+    private final RestaurantRepository restaurantRepository;
 
     public RestaurantServiceImpl(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
     }
 
     @Override
-    public List<Restaurant> getAllRestaurants() {
-        Iterator<Restaurant> restaurantIt = restaurantRepository.findAll().iterator();
-        List<Restaurant> restaurantList = new ArrayList<>();
+    public List<RestaurantDto> showAvailableRestaurants(Pageable pageable) {
+        return restaurantRepository.findAll(pageable)
+                .stream()
+                .map(restaurant -> RestaurantDto.builder()
+                        .address(restaurant.getAddress())
+                        .name(restaurant.getName())
+                        .availableSpots(restaurant.getAvailableSpots())
+                        .imageUrl(restaurant.getImageUrl())
+                        .id(restaurant.getId())
+                        .build()
+                ).toList();
+    }
 
-        for (Iterator<Restaurant> it = restaurantIt; it.hasNext(); ) {
-            Restaurant restaurant = it.next();
-            restaurantList.add(restaurant);
+    @Override
+    public RestaurantDto addNewRestaurant(RestaurantDto restaurantDto) {
+        Restaurant restaurant = new Restaurant();
+        mapFromRestaurantToDto(restaurantDto, restaurant);
+
+        Restaurant newRestaurant = restaurantRepository.save(restaurant);
+        restaurantDto.setId(newRestaurant.getId());
+
+        return restaurantDto;
+    }
+
+    @Override
+    public boolean manageRestaurants(HttpMethod method,
+                                     Integer restaurantId,
+                                     RestaurantDto restaurantDto) {
+        if (HttpMethod.DELETE.equals(method)) {
+            restaurantRepository.deleteById(restaurantId);
+            return true;
         }
 
-        for (Restaurant restaurant : restaurantList) {
-            System.out.println("Got restaurant: " + restaurant.getName());
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElse(null);
+        if (restaurant == null) {
+            throw new RuntimeException("Could not find restaurant with id: " + restaurantId);
         }
+        mapFromRestaurantToDto(restaurantDto, restaurant);
+        restaurantRepository.save(restaurant);
 
-        return restaurantList;
+        return true;
     }
 
-
-    @Override
-    public void updateAvailableSpots(Integer restaurantId,
-                                     Integer newAvailableSpots) {
-        restaurantRepository.findById(restaurantId)
-                .ifPresent(currentRestaurant -> {
-                    currentRestaurant.setAvailableSpots(newAvailableSpots);
-                    restaurantRepository.save(currentRestaurant);
-                });
-    }
-
-    @Override
-    public Restaurant addRestaurant(int id, String name, String owner, String address, int availableSpots, int maximumGuestNumber, String imageUrl) {
-        return restaurantRepository.save(new Restaurant());
-    }
-
-    @Override
-    public Long deleteRestaurantByName(String name) {
-        return restaurantRepository.deleteByName(name);
+    private void mapFromRestaurantToDto(RestaurantDto restaurantDto, Restaurant restaurant) {
+        restaurant.setAvailableSpots(restaurantDto.getAvailableSpots());
+        restaurant.setImageUrl(restaurantDto.getImageUrl());
+        restaurant.setAddress(restaurantDto.getAddress());
+        restaurant.setName(restaurantDto.getName());
     }
 }

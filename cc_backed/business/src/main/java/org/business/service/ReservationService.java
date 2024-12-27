@@ -1,15 +1,19 @@
 package org.business.service;
 
-import org.business.model.*;
 import org.business.pojo.ReservationDto;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpMethod;
 
 import java.util.List;
 
 public interface ReservationService {
-    List<ReservationDto> getAllReservations(Pageable pageable);
+    List<ReservationDto> findReservations(Pageable pageable);
 
-    ReservationDto createReservation(Integer customerId,
-                                     Integer restaurantId,
-                                     ReservationDto newReservation);
+    ReservationDto createNewReservation(Integer customerId,
+                                        Integer restaurantId,
+                                        ReservationDto newReservation);
+
+    boolean manageReservation(HttpMethod currentMethod,
+                              Integer reservationId,
+                              ReservationDto reservationDto);
 }
