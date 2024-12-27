@@ -1,17 +1,23 @@
 package org.business.service;
 
+import ch.qos.logback.core.util.StringUtil;
 import org.business.exceptions.NotEnoughSpotsException;
-import org.business.pojo.ReservationDto;
-import org.service.customer.model.Customer;
-import org.service.customer.repository.CustomerRepository;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpMethod;
-import org.springframework.stereotype.Service;
-
 import org.business.model.Reservation;
 import org.business.model.Restaurant;
+import org.business.pojo.ReservationDto;
 import org.business.repository.ReservationRepository;
 import org.business.repository.RestaurantRepository;
+import org.business.utils.AppUtils;
+import org.business.utils.PageableResponse;
+import org.service.customer.model.Customer;
+import org.service.customer.repository.CustomerRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -30,17 +36,25 @@ public class ReservationServiceImpl implements ReservationService {
     final RestaurantRepository restaurantRepository;
 
     @Override
-    public List<ReservationDto> findReservations(Pageable pageable) {
-        return reservationRepository.findAll(pageable)
-                .map(reservation -> ReservationDto.builder()
+    public PageableResponse<ReservationDto> findReservations(Pageable pageable, String searchString) {
+        pageable = enhancePageable(pageable);
+        Page<Reservation> reservationPage = StringUtil.isNullOrEmpty(searchString) ?
+                reservationRepository.findAll(pageable) :
+                reservationRepository.searchReservationByGuestNameLike(searchString, pageable);
+
+        List<ReservationDto> payload = reservationPage.map(reservation -> ReservationDto.builder()
                         .id(reservation.getId())
                         .guestCount(reservation.getGuestCount())
                         .reservationDate(reservation.getReservationDate())
                         .restaurantName(reservation.getRestaurantName())
+                        .reservationGuestName(reservation.getGuestName())
                         .build()
                 )
                 .stream().toList();
+
+        return AppUtils.buildPageableResponse(payload, reservationPage);
     }
+
 
     @Override
     public ReservationDto createNewReservation(Integer customerId,
@@ -109,5 +123,12 @@ public class ReservationServiceImpl implements ReservationService {
             return true;
         }
         return false;
+    }
+
+    private static Pageable enhancePageable(Pageable pageable) {
+        if (Sort.unsorted().equals(pageable.getSort())) {
+            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
+        }
+        return pageable;
     }
 }

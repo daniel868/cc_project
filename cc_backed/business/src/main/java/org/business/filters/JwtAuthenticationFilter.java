@@ -29,20 +29,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            writeResponseError(response);
-        }
-        if (authHeader != null) {
-            String token = authHeader.substring(7);
-            logger.debug("Requests with token: {}" + token);
-            if (isTokenExpired(token)) {
-                logger.debug("Token expired: {}" + token);
-                writeResponseError(response);
-            }
-            filterChain.doFilter(request, response);
-        }
-
+//        String authHeader = request.getHeader("Authorization");
+//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+//            writeResponseError(response);
+//        }
+//        if (authHeader != null) {
+//            String token = authHeader.substring(7);
+//            logger.debug("Requests with token: {}" + token);
+//            if (isTokenExpired(token)) {
+//                logger.debug("Token expired: {}" + token);
+//                writeResponseError(response);
+//            }
+//            filterChain.doFilter(request, response);
+//        }
+        filterChain.doFilter(request, response);
     }
 
     private void writeResponseError(HttpServletResponse response) throws IOException {

@@ -2,6 +2,7 @@ package org.business.controller;
 
 import org.business.pojo.ReservationDto;
 import org.business.service.ReservationService;
+import org.business.utils.PageableResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -23,8 +24,9 @@ public class ReservationController {
     }
 
     @GetMapping("")
-    public List<ReservationDto> getAllReservations(Pageable pageable) {
-        return reservationService.findReservations(pageable);
+    public PageableResponse<ReservationDto> getAllReservations(Pageable pageable,
+                                                               @RequestParam(value = "searchString", required = false) String searchString) {
+        return reservationService.findReservations(pageable, searchString);
     }
 
     @PostMapping("/{restaurantId}/{customerId}")
