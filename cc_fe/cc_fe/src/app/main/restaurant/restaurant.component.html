@@ -1,15 +1,16 @@
 <div class="container mt-5">
 
   <!-- Search Bar -->
-  <div class="row justify-content-right mb-3">
+  <div class="row justify-content-center mb-3">
     <div class="col-md-4">
       <input
         type="text"
         class="form-control search-bar"
         placeholder="Search restaurants or addresses.."
+        [(ngModel)]="searchString"
+        (ngModelChange)="onSearchStringChange($event)"
       />
     </div>
-
 
     <!-- Guest Size Filter -->
     <div class="col-md-2">
@@ -25,6 +26,11 @@
         <option value="100">100+ Guests</option>
       </select>
     </div>
+
+    <div class="col-md-2">
+      <button class="btn btn-outline-primary search-bar" type="button" (click)="showAddRestaurantModal()">Add restaurant</button>
+    </div>
+
   </div>
 
   <div class="row">

@@ -4,17 +4,16 @@ import ch.qos.logback.core.util.StringUtil;
 import org.business.model.*;
 import org.business.pojo.RestaurantDto;
 import org.business.repository.RestaurantRepository;
+import org.business.repository.RestaurantSpecification;
 import org.business.utils.AppUtils;
 import org.business.utils.PageableResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -76,20 +75,15 @@ public class RestaurantServiceImpl implements RestaurantService {
     private Page<Restaurant> buildRestaurantSearchQuery(Pageable pageable, String searchString, Integer guestCountFilter) {
         boolean emptySearchString = StringUtil.isNullOrEmpty(searchString);
         boolean emptyGuestCountFilter = (guestCountFilter == null || guestCountFilter.equals(-1));
-
-        if (!emptySearchString && !emptyGuestCountFilter) {
-            return restaurantRepository.searchRestaurantByAvailableSpotsGreaterThanAndNameLike(guestCountFilter, searchString, pageable);
-        }
-
-        if (emptySearchString && !emptyGuestCountFilter) {
-            return restaurantRepository.searchRestaurantByAvailableSpotsGreaterThan(guestCountFilter, pageable);
-        }
-
+        Specification<Restaurant> specification = Specification.where(null);
         if (!emptySearchString) {
-            return restaurantRepository.searchRestaurantByNameOrAddressLike(searchString, pageable);
+            specification = specification.and(RestaurantSpecification.nameOrAddressLike(searchString));
+        }
+        if (!emptyGuestCountFilter) {
+            specification = specification.and(RestaurantSpecification.hasAvailableSpotsGreaterThan(guestCountFilter));
         }
 
-        return restaurantRepository.findAll(pageable);
+        return restaurantRepository.findAll(specification,pageable);
     }
 
     private void mapFromRestaurantToDto(RestaurantDto restaurantDto, Restaurant restaurant) {

@@ -21,6 +21,9 @@ import {EffectsModule} from "@ngrx/effects";
 import {RestaurantEffects} from "./common/state/restaurant/restaurant.effects";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AddEditRestaurantModalComponent} from './modals/add-edit-restaurant-modal/add-edit-restaurant-modal.component';
+import {BsModalRef, BsModalService, ModalModule} from "ngx-bootstrap/modal";
+import {BsDropdownConfig} from "ngx-bootstrap/dropdown";
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     HeaderComponent,
     DropdownDirective,
     LoginComponent,
-    ReservationComponent
+    ReservationComponent,
+    AddEditRestaurantModalComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,11 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatPaginatorModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    BsModalService,
+    BsModalRef,
+    BsDropdownConfig
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
