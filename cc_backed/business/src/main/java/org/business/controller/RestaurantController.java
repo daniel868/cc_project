@@ -3,6 +3,7 @@ package org.business.controller;
 import org.business.model.*;
 import org.business.pojo.RestaurantDto;
 import org.business.service.RestaurantService;
+import org.business.utils.PageableResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,10 @@ public class RestaurantController {
     }
 
     @GetMapping("")
-    public List<RestaurantDto> getAllRestaurants(Pageable pageable) {
-        return restaurantService.showAvailableRestaurants(pageable);
+    public PageableResponse<RestaurantDto> getAllRestaurants(Pageable pageable,
+                                                             @RequestParam(value = "searchString", required = false) String searchString,
+                                                             @RequestParam(value = "guestCountFilter", required = false) Integer guestCountFilter) {
+        return restaurantService.showAvailableRestaurants(pageable, searchString, guestCountFilter);
     }
 
     @PostMapping(path = "")

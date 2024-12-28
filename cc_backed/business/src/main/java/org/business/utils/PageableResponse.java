@@ -13,4 +13,5 @@ public class PageableResponse<T> {
     private int totalPageCount;
     private int pageSize;
     private int nextPage;
+    private long totalElementsCount;
 }

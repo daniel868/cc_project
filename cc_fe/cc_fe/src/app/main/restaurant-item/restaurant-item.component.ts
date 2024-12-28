@@ -8,6 +8,9 @@ import {Restaurant} from "../../model/restaurant";
 })
 export class RestaurantItemComponent implements OnInit {
 
+  @Input()
+  restaurant: Restaurant | null = null
+
   constructor() {
   }
 

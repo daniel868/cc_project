@@ -17,6 +17,10 @@ import {LoginComponent} from './login/login.component';
 import {ReservationComponent} from './main/reservation/reservation.component';
 import {provideStore, StoreModule} from "@ngrx/store";
 import {appReducer} from "./common/state/app.reducer";
+import {EffectsModule} from "@ngrx/effects";
+import {RestaurantEffects} from "./common/state/restaurant/restaurant.effects";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -38,7 +42,10 @@ import {appReducer} from "./common/state/app.reducer";
     ReactiveFormsModule,
     HttpClientModule,
     NgOptimizedImage,
-    StoreModule.forRoot(appReducer)
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([RestaurantEffects]),
+    MatPaginatorModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -23,6 +23,8 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"org.service.*", "org.business.*"})
@@ -35,24 +37,18 @@ public class BusinessLogicApplication {
 
     @Bean
     CommandLineRunner runner(ReservationRepository reservationRepository,
+                             RestaurantRepository restaurantRepository,
                              ReservationService reservationService) {
         return args -> {
-            Reservation reservation = new Reservation();
-            reservation.setRestaurantName("restaurant1");
-            reservation.setReservationDate(new Date());
-            reservation.setGuestCount(10);
-            reservation.setGuestName("guestName");
+            IntStream.range(0, 20).forEach(i -> {
+                Restaurant restaurant1 = new Restaurant();
+                restaurant1.setName("restaurant" + i);
+                restaurant1.setAddress("address" + i);
+                restaurant1.setAvailableSpots(new Random().nextInt(0, 100));
+                restaurant1.setImageUrl("https://plus.unsplash.com/premium_photo-1661883237884-263e8de8869b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmVzdGF1cmFudHxlbnwwfHwwfHx8MA%3D%3D");
+                restaurantRepository.save(restaurant1);
+            });
 
-            Reservation reservation2 = new Reservation();
-            reservation.setRestaurantName("restaurant2");
-            reservation.setReservationDate(new Date());
-            reservation.setGuestCount(10);
-            reservation.setGuestName("guestName2");
-
-            reservationRepository.saveAll(List.of(reservation, reservation2));
-
-            PageableResponse<ReservationDto> response = reservationService.findReservations(PageRequest.of(0, 1), "Name2");
-            logger.info("");
         };
     }
 }

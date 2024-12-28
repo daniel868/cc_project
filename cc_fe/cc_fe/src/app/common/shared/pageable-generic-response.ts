@@ -3,7 +3,8 @@ export interface PageableGenericResponse<T> {
   currentPage: number,
   totalPageCount: number,
   pageSize: number,
-  nextPage: number
+  nextPage: number,
+  totalElementsCount: number
 }
 
 // {

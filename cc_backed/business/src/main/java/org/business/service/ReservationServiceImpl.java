@@ -36,7 +36,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public PageableResponse<ReservationDto> findReservations(Pageable pageable, String searchString) {
-        pageable = enhancePageable(pageable);
+        pageable = AppUtils.enhancePageable(pageable);
         Page<Reservation> reservationPage = StringUtil.isNullOrEmpty(searchString) ?
                 reservationRepository.findAll(pageable) :
                 reservationRepository.searchReservationByGuestNameLike(searchString, pageable);
@@ -124,10 +124,4 @@ public class ReservationServiceImpl implements ReservationService {
         return false;
     }
 
-    private static Pageable enhancePageable(Pageable pageable) {
-        if (Sort.unsorted().equals(pageable.getSort())) {
-            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "id"));
-        }
-        return pageable;
-    }
 }

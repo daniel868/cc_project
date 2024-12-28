@@ -5,7 +5,8 @@ import {Restaurant} from "../../../model/restaurant";
 
 export const StartFetchRestaurantsAction = createAction('[Restaurant] Start Fetch Restaurants', props<{
   pagination: PageableRequest,
-  searchString: string
+  searchString: string,
+  guestFilterCount: number
 }>())
 
 export const FinishFetchRestaurantsAction = createAction('[Restaurant] Finish Fetch Restaurants', props<{

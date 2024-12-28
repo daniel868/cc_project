@@ -1,7 +1,45 @@
-<div class="row">
-  <div class="container mt-5 offset-md-3">
-<!--    <div class="col-md-2" *ngFor="let restaurant of restaurants">-->
-<!--      <app-restaurant-item [restaurant]="restaurant"></app-restaurant-item>-->
-<!--    </div>-->
+<div class="container mt-5">
+
+  <!-- Search Bar -->
+  <div class="row justify-content-right mb-3">
+    <div class="col-md-4">
+      <input
+        type="text"
+        class="form-control search-bar"
+        placeholder="Search restaurants or addresses.."
+      />
+    </div>
+
+
+    <!-- Guest Size Filter -->
+    <div class="col-md-2">
+      <select
+        [(ngModel)]="guestFilterNumber"
+        (ngModelChange)="onGuestFilterChange($event)"
+        class="form-select guest-size-filter">
+        <option value="-1">All Guest Sizes</option>
+        <option value="10">10+ Guests</option>
+        <option value="20">20+ Guests</option>
+        <option value="40">40+ Guests</option>
+        <option value="60">60+ Guests</option>
+        <option value="100">100+ Guests</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4" *ngFor="let restaurant of transformedData">
+      <app-restaurant-item [restaurant]="restaurant"></app-restaurant-item>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-3">
+    <mat-paginator
+      [length]="totalElementsSize"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      showFirstLastButtons
+      (page)="onPageChanged($event)">
+    </mat-paginator>
   </div>
 </div>
