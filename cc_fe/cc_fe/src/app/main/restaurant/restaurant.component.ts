@@ -31,8 +31,7 @@ export class RestaurantComponent implements OnInit, OnDestroy {
 
   transformedData: Restaurant[] = [];
 
-  constructor(private restaurantService: RestaurantService,
-              private store: Store<AppState>,
+  constructor(private store: Store<AppState>,
               private modalService: BsModalService) {
   }
 

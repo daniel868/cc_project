@@ -19,38 +19,28 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
-    @Getter
-    @Setter
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Getter
-    @Setter
+
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Getter
-    @Setter
+
     @Column(name = "firstname")
     private String firstName;
 
-    @Getter
-    @Setter
     @Column(name = "lastname")
     private String lastName;
 
-    @Getter
-    @Setter
+
     private String email;
 
-    @Getter
-    @Setter
     private String password;
 
-    @Getter
-    @Setter
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -62,7 +52,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
                 .collect(Collectors.toList());
     }
 

@@ -75,7 +75,7 @@ public class AuthController {
             Set<Role> roleSet = new HashSet<>();
 
             if (isValidRole(request.getType())) {
-                roleSet.add(roleService.findByName("ROLE_" + request.getType().toUpperCase()));
+                roleSet.add(roleService.findByName(request.getType().toUpperCase()));
             }
 
             User user = User

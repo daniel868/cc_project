@@ -26,6 +26,7 @@ export class AuthComponent implements OnInit {
       form.value.lastname,
       form.value.type
     );
+
     this.http.post(environment.register_url, signupInfo)
       .subscribe(response => {
         console.log(response);

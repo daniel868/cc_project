@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class Role {
     @Getter
     @Setter
@@ -19,6 +19,7 @@ public class Role {
     @Getter
     @Setter
     @Column(nullable = false, length = 50, unique = true)
-    private String name;
+    @Enumerated(value = EnumType.STRING)
+    private RoleEnum role;
 
 }

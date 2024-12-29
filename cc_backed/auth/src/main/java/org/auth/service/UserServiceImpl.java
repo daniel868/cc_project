@@ -37,12 +37,5 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepository.findByUsername(username).orElse(null);
     }
 
-    private Set<SimpleGrantedAuthority> getAuthority(User user) {
-        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-        });
-        return authorities;
-    }
 
 }
