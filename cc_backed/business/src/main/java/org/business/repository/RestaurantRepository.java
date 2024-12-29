@@ -16,6 +16,8 @@ import java.util.Optional;
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>, JpaSpecificationExecutor<Restaurant> {
     @Query("select r from Restaurant r where r.name like %:searchString% or r.address like %:searchString%")
+
+        //not used anymore; replace with jpaSpecification
     Page<Restaurant> searchRestaurantByNameOrAddressLike(@Param("searchString") String searchString, Pageable pageable);
 
     Page<Restaurant> searchRestaurantByAvailableSpotsGreaterThan(int availableSpotsIsGreaterThan, Pageable pageable);

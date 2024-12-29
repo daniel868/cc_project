@@ -46,6 +46,7 @@ public class BusinessLogicApplication {
                 restaurant1.setAddress("address" + i);
                 restaurant1.setAvailableSpots(new Random().nextInt(0, 100));
                 restaurant1.setImageUrl("https://plus.unsplash.com/premium_photo-1661883237884-263e8de8869b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmVzdGF1cmFudHxlbnwwfHwwfHx8MA%3D%3D");
+                restaurant1.setDescription("restaurantDescription" + i);
                 restaurantRepository.save(restaurant1);
             });
 

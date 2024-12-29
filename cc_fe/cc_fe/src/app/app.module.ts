@@ -6,7 +6,6 @@ import {AppComponent} from './app.component';
 import {AuthComponent} from './auth/auth.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MainComponent} from './main/main.component';
-import {AddRestaurantComponent} from './main/add-restaurant/add-restaurant.component';
 import {NgOptimizedImage} from "@angular/common";
 import {RestaurantItemComponent} from './main/restaurant-item/restaurant-item.component';
 import {RestaurantComponent} from './main/restaurant/restaurant.component';
@@ -24,20 +23,26 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AddEditRestaurantModalComponent} from './modals/add-edit-restaurant-modal/add-edit-restaurant-modal.component';
 import {BsModalRef, BsModalService, ModalModule} from "ngx-bootstrap/modal";
 import {BsDropdownConfig} from "ngx-bootstrap/dropdown";
+import {RestaurantInfoModalComponent} from './modals/restaurant-info-modal/restaurant-info-modal.component';
+import {GenericSuccessModalComponent} from './modals/generic-success-modal/generic-success-modal.component';
+import {GenericFailedModalComponent} from './modals/generic-failed-modal/generic-failed-modal.component';
+import {SharedEffects} from "./common/state/shared/shared.effects";
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     MainComponent,
-    AddRestaurantComponent,
     RestaurantItemComponent,
     RestaurantComponent,
     HeaderComponent,
     DropdownDirective,
     LoginComponent,
     ReservationComponent,
-    AddEditRestaurantModalComponent
+    AddEditRestaurantModalComponent,
+    RestaurantInfoModalComponent,
+    GenericSuccessModalComponent,
+    GenericFailedModalComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,7 @@ import {BsDropdownConfig} from "ngx-bootstrap/dropdown";
     HttpClientModule,
     NgOptimizedImage,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([RestaurantEffects]),
+    EffectsModule.forRoot([RestaurantEffects, SharedEffects]),
     MatPaginatorModule,
     BrowserAnimationsModule
   ],

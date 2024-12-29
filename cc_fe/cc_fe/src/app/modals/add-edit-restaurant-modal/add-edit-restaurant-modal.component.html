@@ -1,12 +1,75 @@
 <div class="modal-header">
   <h5 class="modal-title">
     <i class="bi me-2"></i>
-    {{ 'Add Restaurant' }}
+    {{ modalTitle }}
   </h5>
-  <button type="button" class="btn-close btn-close-white" aria-label="Close"></button>
 </div>
 
-<div class="modal-body">
+<div class="modal-body d-flex align-items-center justify-content-center">
+  <div class="modal-content p-4 rounded">
+    <form [formGroup]="addEditRestaurantForm">
+      <div class="mb-3">
+        <label for="restaurantName" class="form-label">Name</label>
+        <input type="text"
+               id="restaurantName"
+               name="restaurantName"
+               formControlName="restaurantName"
+               class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="restaurantPictureUrl" class="form-label">Image URL</label>
+        <input type="text"
+               id="restaurantPictureUrl"
+               name="restaurantPictureUrl"
+               class="form-control"
+               formControlName="restaurantPictureUrl">
+      </div>
+
+      <div class="mb-3 text-center" *ngIf="getFormControl('restaurantPictureUrl')?.value !== ''">
+        <img [src]="getFormControl('restaurantPictureUrl')?.value"
+             class="img-fluid rounded"
+             alt="Restaurant Image"
+             style="max-height: 200px;">
+      </div>
+
+      <div class="mb-3">
+        <label for="restaurantDescription" class="form-label">Description</label>
+        <textarea id="restaurantDescription"
+                  class="form-control"
+                  name="restaurantDescription"
+                  formControlName="restaurantDescription"
+                  rows="4">
+        </textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="restaurantAddress" class="form-label">Restaurant Address</label>
+        <input type="text"
+               id="restaurantAddress"
+               name="restaurantAddress"
+               formControlName="restaurantAddress"
+               class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="maximGuestNumber" class="form-label">Guest Number</label>
+        <input type="number" id="maximGuestNumber"
+               class="form-control"
+               name="maximGuestNumber"
+               formControlName="maximGuestNumber">
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-success me-2 px-4"
+                [disabled]="!addEditRestaurantForm.valid"
+                (click)="onSubmit()">Save
+        </button>
+        <button type="button" class="btn btn-danger px-4"
+                (click)="onModalClose()">Cancel
+        </button>
+      </div>
+    </form>
+  </div>
 
 </div>
-

@@ -6,7 +6,9 @@ export const environment = {
   production: false,
   business_base_url: 'http://localhost:9002',
   register_url: 'http://localhost:9001/api/auth/signup',
-  login_url: 'http://localhost:9001/api/auth/login'
+  login_url: 'http://localhost:9001/api/auth/login',
+  default_page_size: 12,
+  default_page_number: 0
 };
 
 /*

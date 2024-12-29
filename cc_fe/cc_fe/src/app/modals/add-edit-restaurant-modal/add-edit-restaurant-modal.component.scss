@@ -1,0 +1,82 @@
+.modal-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal content box */
+.modal-content {
+  width: 100%;
+  max-width: 500px; /* Set max width for responsiveness */
+  background: #fff; /* White background for the modal */
+  padding: 1.5rem; /* Internal padding */
+  border-radius: 0.5rem; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a floating effect */
+}
+
+/* Modal header styling */
+.modal-header {
+  border-bottom: none; /* Remove default border */
+  margin-bottom: 1rem; /* Add spacing between header and body */
+  display: flex;
+  justify-content: space-between; /* Align title and close button */
+  align-items: center;
+}
+
+.modal-title {
+  font-weight: bold; /* Bold title */
+  text-align: center; /* Centered text */
+  width: 100%; /* Stretch title to occupy space */
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+/* Image preview */
+.img-fluid {
+  max-height: 200px; /* Limit the height of the image */
+  border-radius: 0.5rem; /* Rounded corners */
+  display: block;
+  margin: 0 auto; /* Center the image */
+}
+
+/* Form spacing */
+.form-label {
+  font-weight: 500; /* Slightly bold labels */
+  margin-bottom: 0.5rem; /* Add space below labels */
+}
+
+.form-control {
+  border-radius: 0.375rem; /* Rounded input fields */
+  padding: 0.5rem 0.75rem; /* Adjust padding for better input size */
+}
+
+textarea.form-control {
+  resize: none; /* Prevent resizing of the textarea */
+}
+
+/* Button styling */
+button.btn {
+  padding: 0.5rem 1rem; /* Add consistent button padding */
+  border-radius: 0.375rem; /* Rounded buttons */
+}
+
+button.btn-success {
+  background-color: #28a745; /* Green success button */
+  border-color: #28a745;
+  color: white;
+}
+
+button.btn-danger {
+  background-color: #dc3545; /* Red danger button */
+  border-color: #dc3545;
+  color: white;
+}
+
+button.btn:hover {
+  opacity: 0.9; /* Slight opacity effect on hover */
+}

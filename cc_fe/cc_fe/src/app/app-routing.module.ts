@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthComponent} from "./auth/auth.component";
 import {MainComponent} from "./main/main.component";
-import {AddRestaurantComponent} from "./main/add-restaurant/add-restaurant.component";
 import {RestaurantComponent} from "./main/restaurant/restaurant.component";
 import {LoginComponent} from "./login/login.component";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
@@ -28,10 +27,6 @@ const routes: Routes = [
     component: MainComponent,
     canActivate: [AuthGuard],
     children: [
-      {
-        path: 'add-restaurant',
-        component: AddRestaurantComponent
-      },
       {
         path: 'restaurants',
         component: RestaurantComponent

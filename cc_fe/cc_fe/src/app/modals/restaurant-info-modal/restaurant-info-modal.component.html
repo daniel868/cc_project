@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h5 class="modal-title">
+    <i class="bi me-2"></i>
+    {{ 'Restaurant details' }}
+  </h5>
+</div>
+
+<div class="modal-body d-flex align-items-center justify-content-center">
+  <div class="modal-content p-4 rounded">
+    <div class="modal-body">
+      <div class="mb-3 text-center">
+        <img [src]="restaurant.imageUrl"
+             class="img-fluid rounded"
+             alt="Restaurant Image"
+             style="max-height: 200px; max-width: 100%;">
+      </div>
+
+      <div class="mb-3">
+        <h6 class="fw-bold">Name</h6>
+        <p class="text-muted">{{ restaurant.name }}</p>
+      </div>
+
+      <div class="mb-3">
+        <h6 class="fw-bold">Description</h6>
+        <p class="text-muted">{{ restaurant.description }}</p>
+      </div>
+
+      <div class="mb-3">
+        <h6 class="fw-bold">Address</h6>
+        <p class="text-muted">{{ restaurant.address }}</p>
+      </div>
+
+      <div class="mb-3">
+        <h6 class="fw-bold">Guest Capacity</h6>
+        <p class="text-muted">{{ restaurant.availableSpots }}</p>
+      </div>
+    </div>
+    <div class="modal-footer border-0 d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary px-4" (click)="onModalClose()">Close</button>
+    </div>
+  </div>
+</div>

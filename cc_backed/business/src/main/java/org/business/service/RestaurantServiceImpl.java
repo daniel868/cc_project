@@ -34,6 +34,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                         .name(restaurant.getName())
                         .availableSpots(restaurant.getAvailableSpots())
                         .imageUrl(restaurant.getImageUrl())
+                        .description(restaurant.getDescription())
                         .id(restaurant.getId())
                         .build()
                 ).toList();
@@ -83,7 +84,7 @@ public class RestaurantServiceImpl implements RestaurantService {
             specification = specification.and(RestaurantSpecification.hasAvailableSpotsGreaterThan(guestCountFilter));
         }
 
-        return restaurantRepository.findAll(specification,pageable);
+        return restaurantRepository.findAll(specification, pageable);
     }
 
     private void mapFromRestaurantToDto(RestaurantDto restaurantDto, Restaurant restaurant) {
@@ -91,5 +92,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurant.setImageUrl(restaurantDto.getImageUrl());
         restaurant.setAddress(restaurantDto.getAddress());
         restaurant.setName(restaurantDto.getName());
+        restaurant.setDescription(restaurant.getDescription());
     }
 }

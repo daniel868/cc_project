@@ -26,8 +26,11 @@ public class Restaurant {
     @Column(name = "image_url")
     private String imageUrl;
 
+    private String description;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST
+            CascadeType.PERSIST,
+            CascadeType.REMOVE
     })
     @JoinColumn(name = "restaurant_id")
     private Set<Reservation> reservations;

@@ -7,11 +7,12 @@ import {StartFetchRestaurantsAction} from "../../common/state/restaurant/restaur
 import {debounceTime, map, Subscription} from "rxjs";
 import {PageEvent} from "@angular/material/paginator";
 import {PageableRequest} from "../../common/shared/pageable-request";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {
   AddEditRestaurantModalComponent
 } from "../../modals/add-edit-restaurant-modal/add-edit-restaurant-modal.component";
 import {Actions} from "@ngrx/effects";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-restaurant',
@@ -19,7 +20,6 @@ import {Actions} from "@ngrx/effects";
   styleUrls: ['./restaurant.component.scss'],
 })
 export class RestaurantComponent implements OnInit, OnDestroy {
-  private actions$ = inject(BsModalService)
 
   totalElementsSize: number = 0;
   pageSize: number = 0;
@@ -32,12 +32,16 @@ export class RestaurantComponent implements OnInit, OnDestroy {
   transformedData: Restaurant[] = [];
 
   constructor(private restaurantService: RestaurantService,
-              private store: Store<AppState>) {
+              private store: Store<AppState>,
+              private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
     this.store.dispatch(StartFetchRestaurantsAction({
-      pagination: {page: 0, size: 10},
+      pagination: {
+        page: environment.default_page_number,
+        size: environment.default_page_size
+      },
       searchString: '',
       guestFilterCount: this.guestFilterNumber
     }))
@@ -59,7 +63,10 @@ export class RestaurantComponent implements OnInit, OnDestroy {
       debounceTime(300)
     ).subscribe(value => {
       this.store.dispatch(StartFetchRestaurantsAction({
-        pagination: {page: 0, size: 10},
+        pagination: {
+          page: environment.default_page_number,
+          size: environment.default_page_size
+        },
         searchString: this.searchString,
         guestFilterCount: this.guestFilterNumber
       }))
@@ -80,7 +87,10 @@ export class RestaurantComponent implements OnInit, OnDestroy {
 
   onGuestFilterChange($event: any) {
     this.store.dispatch(StartFetchRestaurantsAction({
-      pagination: {page: 0, size: 10},
+      pagination: {
+        page: environment.default_page_number,
+        size: environment.default_page_size
+      },
       searchString: this.searchString,
       guestFilterCount: this.guestFilterNumber
     }))
@@ -98,6 +108,15 @@ export class RestaurantComponent implements OnInit, OnDestroy {
 
 
   showAddRestaurantModal() {
-    this.actions$.show(AddEditRestaurantModalComponent)
+    const initialState = {
+      modalTitle: 'Add Restaurant'
+    };
+
+    const modalOptions: ModalOptions = {
+      initialState: initialState,
+      backdrop: true,  // Enables backdrop click to close the modal
+      keyboard: true,  // Close the modal when pressing escape
+    };
+    this.modalService.show(AddEditRestaurantModalComponent, modalOptions)
   }
 }
