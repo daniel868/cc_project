@@ -22,6 +22,6 @@ public class RoleController {
 
     @GetMapping("")
     public ResponseEntity<List<RoleDto>> getUserRoles() {
-
+        return null;
     }
 }
