@@ -27,6 +27,7 @@ import {RestaurantInfoModalComponent} from './modals/restaurant-info-modal/resta
 import {GenericSuccessModalComponent} from './modals/generic-success-modal/generic-success-modal.component';
 import {GenericFailedModalComponent} from './modals/generic-failed-modal/generic-failed-modal.component';
 import {SharedEffects} from "./common/state/shared/shared.effects";
+import {AuthEffects} from "./common/state/auth/auth.effects";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import {SharedEffects} from "./common/state/shared/shared.effects";
     HttpClientModule,
     NgOptimizedImage,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([RestaurantEffects, SharedEffects]),
+    EffectsModule.forRoot([RestaurantEffects, SharedEffects, AuthEffects]),
     MatPaginatorModule,
     BrowserAnimationsModule
   ],

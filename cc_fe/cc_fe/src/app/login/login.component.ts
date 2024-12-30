@@ -4,6 +4,13 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {LoginData} from "../model/login";
 import {environment} from "../../environments/environment";
+import {AppState} from "../common/state/app.reducer";
+import {Store} from "@ngrx/store";
+import {
+  GuestAuthAction,
+  StoreAuthRoleAction
+} from "../common/state/auth/auth.actions";
+import {ROLE} from "../model/role";
 
 @Component({
   selector: 'app-login',
@@ -12,7 +19,9 @@ import {environment} from "../../environments/environment";
 })
 export class LoginComponent {
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private store: Store<AppState>) {
   }
 
   onLogin(form: NgForm) {
@@ -21,7 +30,8 @@ export class LoginComponent {
       .subscribe((response: any) => {
         console.log(response);
         localStorage.setItem('jwt', response.jwt);
-        this.router.navigate(['/main']);
+        this.router.navigate(['/main/restaurants']);
+        this.store.dispatch(GuestAuthAction({guestValue: false}))
       }, error => {
         console.error(error);
       });
@@ -29,5 +39,11 @@ export class LoginComponent {
 
   onRegisterRedirect() {
     this.router.navigate(['/auth']);
+  }
+
+  onContinueAsGuest() {
+    this.store.dispatch(StoreAuthRoleAction({role: ROLE.ADMIN}))
+    this.store.dispatch(GuestAuthAction({guestValue: true}))
+    this.router.navigate(['/main/restaurants']);
   }
 }

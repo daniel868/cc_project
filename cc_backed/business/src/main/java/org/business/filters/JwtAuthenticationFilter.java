@@ -9,7 +9,11 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.business.utils.AppConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -23,26 +27,44 @@ import java.util.Map;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    private final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     @Value("${jwt.secretKey}")
     private String secretKey;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-//        String authHeader = request.getHeader("Authorization");
-//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-//            writeResponseError(response);
-//        }
-//        if (authHeader != null) {
-//            String token = authHeader.substring(7);
-//            logger.debug("Requests with token: {}" + token);
-//            if (isTokenExpired(token)) {
-//                logger.debug("Token expired: {}" + token);
-//                writeResponseError(response);
-//            }
-//            filterChain.doFilter(request, response);
-//        }
+        String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null && isWhiteListRequest(request)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            writeResponseError(response);
+        }
+        if (authHeader != null) {
+            String token = authHeader.substring(7);
+            logger.debug("Requests with token: {}", token);
+            if (isTokenExpired(token)) {
+                logger.debug("Token expired: {}", token);
+                writeResponseError(response);
+            }
+            filterChain.doFilter(request, response);
+            return;
+        }
         filterChain.doFilter(request, response);
+    }
+
+    private boolean isWhiteListRequest(HttpServletRequest request) {
+        String method = request.getMethod();
+        String requestURI = request.getRequestURI();
+        HttpMethod httpMethod = HttpMethod.valueOf(method);
+
+        AppConstants.WhiteListAPI currentAPI = new AppConstants.WhiteListAPI(httpMethod, requestURI);
+
+        return AppConstants.WHITE_LIST_APIS.contains(currentAPI);
     }
 
     private void writeResponseError(HttpServletResponse response) throws IOException {

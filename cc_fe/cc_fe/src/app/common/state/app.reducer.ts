@@ -1,10 +1,13 @@
 import {ActionReducerMap} from "@ngrx/store";
 import {restaurantReducer, RestaurantState} from "./restaurant/restaurant.reducer";
+import {authReducer, AuthState} from "./auth/auth.reducer";
 
 export interface AppState {
-  restaurantState: RestaurantState
+  restaurantState: RestaurantState,
+  authState: AuthState
 }
 
 export const appReducer: ActionReducerMap<AppState> = {
-  restaurantState: restaurantReducer
+  restaurantState: restaurantReducer,
+  authState: authReducer
 }

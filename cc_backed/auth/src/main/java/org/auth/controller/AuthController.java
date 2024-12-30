@@ -49,13 +49,18 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                             authenticationRequest.getPassword()));
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            User userByUsername = userService.findUserByUsername(authenticationRequest.getUsername());
+
+            UsernamePasswordAuthenticationToken authenticationReq = new UsernamePasswordAuthenticationToken(
+                    userByUsername, null, userByUsername.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(authenticationReq);
 
             // Generate token when  authentication is successful
             String token = jwtToken.generateToken(authentication);
             // Store token in session
             httpSession.setAttribute("jwtToken", token);
-
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             return ResponseEntity.ok(new AuthResponse(token));
         } catch (AuthenticationException ex) {
             logger.error("Error sign in user");
