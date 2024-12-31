@@ -10,7 +10,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/reservations")
@@ -25,8 +30,10 @@ public class ReservationController {
 
     @GetMapping("")
     public PageableResponse<ReservationDto> getAllReservations(Pageable pageable,
-                                                               @RequestParam(value = "searchString", required = false) String searchString) {
-        return reservationService.findReservations(pageable, searchString);
+                                                               @RequestParam(value = "searchString", required = false) String searchString,
+                                                               @RequestParam(value = "searchDate", required = false) Long searchDate
+    ) {
+        return reservationService.findReservations(pageable, searchString, searchDate);
     }
 
     @PostMapping(value = "/{restaurantId}")

@@ -8,7 +8,9 @@ import org.springframework.http.HttpMethod;
 import java.util.List;
 
 public interface ReservationService {
-    PageableResponse<ReservationDto> findReservations(Pageable pageable, String searchString);
+    PageableResponse<ReservationDto> findReservations(Pageable pageable,
+                                                      String searchString,
+                                                      Long searchDateInMillis);
 
     ReservationDto createNewReservation(Integer customerId,
                                         Integer restaurantId,

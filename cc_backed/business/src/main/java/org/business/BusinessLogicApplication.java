@@ -22,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
@@ -54,7 +55,7 @@ public class BusinessLogicApplication {
                 Reservation reservation = new Reservation();
                 reservation.setGuestCount(i + 10);
                 reservation.setGuestName("guest" + i);
-                reservation.setReservationDate(new Date());
+                reservation.setReservationDate(new Date(System.currentTimeMillis() + (60 * 60 * 1000)));
                 reservation.setRestaurantName("restaurant" + i);
                 restaurant1.addReservation(reservation);
 

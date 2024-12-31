@@ -25,6 +25,9 @@ export class ReservationEffects {
           .append('page', props.pageable.page)
           .append('size', props.pageable.size)
           .append('searchString', props.searchString)
+        if (!!props.searchDate) {
+          queryParams = queryParams.append('searchDate', props.searchDate)
+        }
         return this.httpClient.get<PageableGenericResponse<Reservation>>(`${environment.business_base_url}/reservations`, {params: queryParams})
           .pipe(
             map(data => {

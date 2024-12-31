@@ -1,4 +1,24 @@
 <div class="container mt-4">
+  <div class="row justify-content-left mb-3">
+    <div class="col-md-4">
+      <input
+        type="text"
+        class="form-control search-bar"
+        placeholder="Search guest or restaurant.."
+        [(ngModel)]="searchString"
+        (ngModelChange)="onSearchChanged($event)"
+      />
+    </div>
+    <div class="col-md-3">
+      <input class="form-control"
+             type="datetime-local"
+             id="reservationDate"
+             [(ngModel)]="searchDate"
+             (ngModelChange)="onDateChanged($event)"
+             name="reservationDate"/>
+    </div>
+  </div>
+
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col" *ngFor="let reservation of transformedData">
       <app-reservation-item [reservation]="reservation"></app-reservation-item>

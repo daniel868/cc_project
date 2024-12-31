@@ -6,6 +6,7 @@ import org.business.model.Reservation;
 import org.business.model.Restaurant;
 import org.business.pojo.ReservationDto;
 import org.business.repository.ReservationRepository;
+import org.business.repository.ReservationSpecification;
 import org.business.repository.RestaurantRepository;
 import org.business.utils.AppUtils;
 import org.business.utils.PageableResponse;
@@ -15,9 +16,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,11 +38,11 @@ public class ReservationServiceImpl implements ReservationService {
     final RestaurantRepository restaurantRepository;
 
     @Override
-    public PageableResponse<ReservationDto> findReservations(Pageable pageable, String searchString) {
+    public PageableResponse<ReservationDto> findReservations(Pageable pageable,
+                                                             String searchString,
+                                                             Long searchDateInMillis) {
         pageable = AppUtils.enhancePageable(pageable);
-        Page<Reservation> reservationPage = StringUtil.isNullOrEmpty(searchString) ?
-                reservationRepository.findAll(pageable) :
-                reservationRepository.searchReservationByGuestNameLike(searchString, pageable);
+        Page<Reservation> reservationPage = buildReservationSearchQuery(pageable, searchString, searchDateInMillis);
 
         List<ReservationDto> payload = reservationPage.map(reservation -> ReservationDto.builder()
                         .id(reservation.getId())
@@ -52,6 +55,21 @@ public class ReservationServiceImpl implements ReservationService {
                 .stream().toList();
 
         return AppUtils.buildPageableResponse(payload, reservationPage);
+    }
+
+    private Page<Reservation> buildReservationSearchQuery(Pageable pageable,
+                                                          String searchString,
+                                                          Long searchDateInMillis) {
+        Specification<Reservation> specification = Specification.where(null);
+        if (!StringUtil.isNullOrEmpty(searchString)) {
+            specification = specification.and(ReservationSpecification.guestNameOrRestaurantLike(searchString));
+        }
+        if (searchDateInMillis != null) {
+            Date searchDate = new Date(searchDateInMillis);
+            specification = specification.and(ReservationSpecification.reservationDateGraterOrEqualThan(searchDate));
+        }
+
+        return reservationRepository.findAll(specification, pageable);
     }
 
 
