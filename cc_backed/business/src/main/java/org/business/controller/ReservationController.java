@@ -29,11 +29,10 @@ public class ReservationController {
         return reservationService.findReservations(pageable, searchString);
     }
 
-    @PostMapping("/{restaurantId}/{customerId}")
-    public ResponseEntity<ReservationDto> addNewReservation(@PathVariable Integer restaurantId,
-                                                            @PathVariable(required = false) Integer customerId,
+    @PostMapping(value = "/{restaurantId}")
+    public ResponseEntity<ReservationDto> addNewReservation(@PathVariable("restaurantId") Integer restaurantId,
                                                             @RequestBody ReservationDto newReservation) {
-        ReservationDto reservation = reservationService.createNewReservation(customerId, restaurantId, newReservation);
+        ReservationDto reservation = reservationService.createNewReservation(null, restaurantId, newReservation);
         return ResponseEntity.ok()
                 .body(reservation);
     }

@@ -7,6 +7,7 @@ import {LoginComponent} from "./login/login.component";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {TokenInterceptor} from "./token-interceptor.interceptor";
 import {AuthGuard} from "./common/auth.guard";
+import {ReservationComponent} from "./main/reservation/reservation.component";
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
       {
         path: 'restaurants',
         component: RestaurantComponent
+      },
+      {
+        path: 'reservations',
+        component: ReservationComponent
       }
     ]
   }

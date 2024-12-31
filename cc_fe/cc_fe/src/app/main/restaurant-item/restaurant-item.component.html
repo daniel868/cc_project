@@ -1,13 +1,3 @@
-<!--<div class="card mb-3">-->
-<!--  <img src="{{ restaurant?.imageUrl }}" class="card-img" alt="{{ restaurant?.name }}">-->
-<!--  <div class="card-body">-->
-<!--    <h5 class="card-title">{{ restaurant?.name }}</h5>-->
-<!--    &lt;!&ndash;    <p class="card-text">{{ restaurant.description }}</p>&ndash;&gt;-->
-<!--    <p class="card-text"><small class="text-muted">Location: {{ restaurant?.address }}</small></p>-->
-<!--    <p class="card-text"><small class="text-muted">Available guests: {{ restaurant?.availableSpots }}</small></p>-->
-<!--  </div>-->
-<!--</div>-->
-
 <div class="card mb-3">
   <img src="{{ restaurant?.imageUrl }}" class="card-img" alt="{{ restaurant?.name }}">
   <div class="card-body">
@@ -38,7 +28,7 @@
     </p>
     <!-- Book Now Button -->
     <div class="d-flex justify-content-end">
-      <button class="btn btn-primary">Book Now</button>
+      <button class="btn btn-primary" (click)="onBookClicked()">Book Now</button>
     </div>
   </div>
 </div>

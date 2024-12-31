@@ -1,0 +1,42 @@
+<div class="card h-100 shadow-sm">
+  <div class="card-body">
+    <!-- Reservation Title -->
+    <h5 class="card-title d-flex justify-content-between align-items-center">
+      {{ reservation.restaurantName }}
+      <!-- Options Dropdown -->
+      <div class="dropdown">
+        <button
+          class="btn btn-sm btn-outline-dark"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <i class="bi bi-three-dots">...</i> <!-- Bootstrap Icons -->
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" (click)="onEditReservation(reservation)">Edit Reservation</a></li>
+          <li><a class="dropdown-item" (click)="onDeleteReservation(reservation)">Cancel Reservation</a></li>
+        </ul>
+      </div>
+    </h5>
+
+    <!-- Reservation Details -->
+    <p class="card-text">
+      <strong>Guest:</strong> {{ reservation.reservationGuestName }}
+    </p>
+    <p class="card-text">
+      <strong>Date:</strong> {{ reservation.reservationDate | date:'fullDate' }}
+    </p>
+    <p class="card-text">
+      <strong>Time:</strong> {{ reservation.reservationDate | date:'shortTime' }}
+    </p>
+    <p class="card-text">
+      <strong>Guests:</strong> {{ reservation.guestCount }}
+    </p>
+  </div>
+
+  <!-- Footer Buttons -->
+  <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+    <small>Confirmed</small>
+    <button class="btn btn-outline-primary btn-sm" (click)="onViewDetails(reservation)">View Details</button>
+  </div>
+</div>

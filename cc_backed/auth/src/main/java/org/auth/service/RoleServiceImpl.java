@@ -1,6 +1,7 @@
 package org.auth.service;
 
 import org.auth.model.Role;
+import org.auth.model.RoleDto;
 import org.auth.model.RoleEnum;
 import org.auth.repository.RoleRepository;
 import org.auth.repository.UserRepository;
@@ -8,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Service(value = "roleService")
+@Service
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
@@ -21,9 +23,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> findAllByUser(Long userId) {
-        List<Role> allRoleByUser = roleRepository.findAllRoleByUser(userId);
-        return List.of();
+    public List<RoleDto> findAllByUser(Long userId) {
+        return roleRepository.findAllRoleByUser(userId)
+                .stream()
+                .map(role -> RoleDto.builder()
+                        .roleName(role.getRole().getName())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
 

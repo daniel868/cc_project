@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.business.utils.AppConstants;
+import org.business.utils.AppUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,8 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -42,17 +45,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            writeResponseError(response);
+            throw new RuntimeException("Invalid JWT Token");
         }
-        if (authHeader != null) {
-            String token = authHeader.substring(7);
-            logger.debug("Requests with token: {}", token);
-            if (isTokenExpired(token)) {
-                logger.debug("Token expired: {}", token);
-                writeResponseError(response);
-            }
-            filterChain.doFilter(request, response);
-            return;
+        String token = authHeader.substring(7);
+        logger.debug("Requests with token: {}", token);
+        if (isTokenExpired(token)) {
+            logger.debug("Token expired: {}", token);
+            throw new RuntimeException("Invalid JWT Token");
         }
         filterChain.doFilter(request, response);
     }
@@ -62,9 +61,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
         HttpMethod httpMethod = HttpMethod.valueOf(method);
 
-        AppConstants.WhiteListAPI currentAPI = new AppConstants.WhiteListAPI(httpMethod, requestURI);
-
-        return AppConstants.WHITE_LIST_APIS.contains(currentAPI);
+        return AppConstants.WHITE_LIST_APIS.stream()
+                .anyMatch(whiteListApi -> {
+                    Pattern pattern = Pattern.compile(whiteListApi.getUrlPattern());
+                    Matcher matcher = pattern.matcher(requestURI);
+                    return whiteListApi.getMethod().equals(httpMethod) && matcher.matches();
+                });
     }
 
     private void writeResponseError(HttpServletResponse response) throws IOException {

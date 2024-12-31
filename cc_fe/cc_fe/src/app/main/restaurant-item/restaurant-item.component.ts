@@ -8,6 +8,9 @@ import {
 import {AppState} from "../../common/state/app.reducer";
 import {Store} from "@ngrx/store";
 import {DeleteRestaurantAction} from "../../common/state/restaurant/restaurant.actions";
+import {
+  AddEditReservationModalComponent
+} from "../../modals/add-edit-reservation-modal/add-edit-reservation-modal.component";
 
 @Component({
   selector: 'app-restaurant-item',
@@ -61,5 +64,18 @@ export class RestaurantItemComponent implements OnInit {
     if (!!restaurant && !!restaurant.id) {
       this.store.dispatch(DeleteRestaurantAction({restaurantId: restaurant.id}))
     }
+  }
+
+  onBookClicked() {
+    const initialState = {
+      modalTitle: 'Add Reservation',
+      restaurant: this.restaurant
+    }
+    const modalOptions: ModalOptions = {
+      initialState: initialState,
+      backdrop: true,  // Enables backdrop click to close the modal
+      keyboard: true,  // Close the modal when pressing escape
+    };
+    this.modalService.show(AddEditReservationModalComponent, modalOptions)
   }
 }

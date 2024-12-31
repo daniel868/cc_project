@@ -29,6 +29,7 @@ public class Restaurant {
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.MERGE,
             CascadeType.PERSIST,
             CascadeType.REMOVE
     })

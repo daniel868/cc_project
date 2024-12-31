@@ -59,7 +59,7 @@ public class ReservationServiceImpl implements ReservationService {
     public ReservationDto createNewReservation(Integer customerId,
                                                Integer restaurantId,
                                                ReservationDto reservationDto) {
-        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+        Restaurant restaurant = restaurantRepository.loadRestaurantByIdWithReservation(restaurantId)
                 .orElse(null);
         if (restaurant == null) {
             throw new RuntimeException("Could not find restaurant with id: " + restaurantId);

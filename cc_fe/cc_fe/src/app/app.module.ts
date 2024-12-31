@@ -11,23 +11,28 @@ import {RestaurantItemComponent} from './main/restaurant-item/restaurant-item.co
 import {RestaurantComponent} from './main/restaurant/restaurant.component';
 import {HeaderComponent} from './header/header.component';
 import {DropdownDirective} from "./dropdown.directive";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import {LoginComponent} from './login/login.component';
 import {ReservationComponent} from './main/reservation/reservation.component';
-import {provideStore, StoreModule} from "@ngrx/store";
+import {StoreModule} from "@ngrx/store";
 import {appReducer} from "./common/state/app.reducer";
 import {EffectsModule} from "@ngrx/effects";
 import {RestaurantEffects} from "./common/state/restaurant/restaurant.effects";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AddEditRestaurantModalComponent} from './modals/add-edit-restaurant-modal/add-edit-restaurant-modal.component';
-import {BsModalRef, BsModalService, ModalModule} from "ngx-bootstrap/modal";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {BsDropdownConfig} from "ngx-bootstrap/dropdown";
 import {RestaurantInfoModalComponent} from './modals/restaurant-info-modal/restaurant-info-modal.component';
 import {GenericSuccessModalComponent} from './modals/generic-success-modal/generic-success-modal.component';
 import {GenericFailedModalComponent} from './modals/generic-failed-modal/generic-failed-modal.component';
 import {SharedEffects} from "./common/state/shared/shared.effects";
 import {AuthEffects} from "./common/state/auth/auth.effects";
+import {
+  AddEditReservationModalComponent
+} from './modals/add-edit-reservation-modal/add-edit-reservation-modal.component';
+import {ReservationEffects} from "./common/state/reservation/reservation.effects";
+import { ReservationItemComponent } from './main/reservation-item/reservation-item.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,9 @@ import {AuthEffects} from "./common/state/auth/auth.effects";
     AddEditRestaurantModalComponent,
     RestaurantInfoModalComponent,
     GenericSuccessModalComponent,
-    GenericFailedModalComponent
+    GenericFailedModalComponent,
+    AddEditReservationModalComponent,
+    ReservationItemComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +60,7 @@ import {AuthEffects} from "./common/state/auth/auth.effects";
     HttpClientModule,
     NgOptimizedImage,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([RestaurantEffects, SharedEffects, AuthEffects]),
+    EffectsModule.forRoot([RestaurantEffects, SharedEffects, AuthEffects, ReservationEffects]),
     MatPaginatorModule,
     BrowserAnimationsModule
   ],

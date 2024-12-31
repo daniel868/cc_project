@@ -1,5 +1,5 @@
 export interface Reservation {
-  id: number,
+  id: number | null,
   restaurantName: string,
   reservationDate: Date,
   reservationGuestName: string,

@@ -1,0 +1,60 @@
+<div class="modal-header">
+  <h5 class="modal-title">
+    <i class="bi me-2"></i>
+    {{ modalTitle }}
+  </h5>
+</div>
+
+<div class="modal-body d-flex align-items-center justify-content-center">
+  <div class="modal-content p-4 rounded">
+    <form [formGroup]="addEditReservationForm">
+      <div class="mb-3">
+        <label for="reservationDate" class="form-label">Reservation Date</label>
+        <input type="datetime-local"
+               id="reservationDate"
+               name="reservationDate"
+               formControlName="reservationDate"
+               class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="restaurantName" class="form-label">Restaurant Name</label>
+        <input type="text"
+               id="restaurantName"
+               name="restaurantName"
+               formControlName="restaurantName"
+               class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="reservationGuestName" class="form-label">Guest Name</label>
+        <input type="text"
+               id="reservationGuestName"
+               name="reservationGuestName"
+               formControlName="reservationGuestName"
+               class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="guestCount" class="form-label">Guest Count</label>
+        <input type="number"
+               id="guestCount"
+               name="guestCount"
+               formControlName="guestCount"
+               class="form-control">
+      </div>
+
+      <div class="text-center">
+        <button type="submit"
+                class="btn btn-success me-2 px-4"
+                [disabled]="!addEditReservationForm.valid"
+                (click)="onSubmit()">Save
+        </button>
+        <button type="button"
+                class="btn btn-danger px-4"
+                (click)="onModalClose()">Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

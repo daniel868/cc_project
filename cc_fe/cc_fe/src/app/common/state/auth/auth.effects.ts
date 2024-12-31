@@ -16,9 +16,19 @@ export class AuthEffects {
       ofType(LogoutAction),
       map((response) => {
         localStorage.removeItem('jwt');
+        localStorage.removeItem('isGuest')
         this.router.navigate(['/login'])
         return GuestAuthAction({guestValue: true})
       })
     )
+  )
+
+  guestAuthAction = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GuestAuthAction),
+      map(response => {
+        localStorage.setItem('isGuest', JSON.stringify(response))
+      })
+    ), {dispatch: false}
   )
 }
