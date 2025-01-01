@@ -42,6 +42,7 @@ public class AuthServerApplication {
         user.setLastName("test");
         user.setPassword(passwordEncoder.encode("test"));
         user.addRole(roleByRoleAdmin);
+        user.setCustomerId(1);
 
         return args -> {
             userRepository.save(user);

@@ -1,7 +1,9 @@
 package org.business.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.business.service.DelegateCustomerService;
 import org.service.customer.pojo.CustomerDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,11 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
     private final DelegateCustomerService customerService;
+    private final HttpSession httpSession;
 
-    public CustomerController(DelegateCustomerService customerService) {
+    public CustomerController(DelegateCustomerService customerService, HttpSession httpSession) {
         this.customerService = customerService;
+        this.httpSession = httpSession;
     }
 
     @GetMapping("")
@@ -27,6 +31,13 @@ public class CustomerController {
     @PostMapping("")
     public ResponseEntity<CustomerDto> addNewCustomer(@RequestBody CustomerDto customerDto) {
         CustomerDto response = customerService.newCustomerRequests(customerDto);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/currentCustomer")
+    public ResponseEntity<CustomerDto> getCurrentCustomer() {
+        Integer customerId = (Integer) httpSession.getAttribute("customerId");
+        CustomerDto response = customerService.getCustomerByOd(customerId);
         return ResponseEntity.ok(response);
     }
 

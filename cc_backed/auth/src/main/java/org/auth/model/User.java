@@ -48,6 +48,9 @@ public class User implements UserDetails {
     )
     private Set<Role> roles;
 
+    @Column(name = "customer_id")
+    private Integer customerId;
+
     public void addRole(Role role) {
         if (roles == null) {
             roles = new HashSet<>();

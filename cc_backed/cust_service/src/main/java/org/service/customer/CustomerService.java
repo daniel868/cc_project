@@ -14,4 +14,6 @@ public interface CustomerService {
     boolean manageCustomers(HttpMethod method,
                             Integer customerId,
                             CustomerDto customerDto);
+
+    CustomerDto loadCustomerById(Integer customerId);
 }

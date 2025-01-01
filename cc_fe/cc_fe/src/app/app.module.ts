@@ -32,7 +32,9 @@ import {
   AddEditReservationModalComponent
 } from './modals/add-edit-reservation-modal/add-edit-reservation-modal.component';
 import {ReservationEffects} from "./common/state/reservation/reservation.effects";
-import { ReservationItemComponent } from './main/reservation-item/reservation-item.component';
+import {ReservationItemComponent} from './main/reservation-item/reservation-item.component';
+import {CustomerEffects} from "./common/state/customer/customer.effects";
+import { CurrentCustomerModalComponent } from './modals/current-customer-modal/current-customer-modal.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { ReservationItemComponent } from './main/reservation-item/reservation-it
     GenericSuccessModalComponent,
     GenericFailedModalComponent,
     AddEditReservationModalComponent,
-    ReservationItemComponent
+    ReservationItemComponent,
+    CurrentCustomerModalComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,7 @@ import { ReservationItemComponent } from './main/reservation-item/reservation-it
     HttpClientModule,
     NgOptimizedImage,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([RestaurantEffects, SharedEffects, AuthEffects, ReservationEffects]),
+    EffectsModule.forRoot([RestaurantEffects, SharedEffects, AuthEffects, ReservationEffects, CustomerEffects]),
     MatPaginatorModule,
     BrowserAnimationsModule
   ],

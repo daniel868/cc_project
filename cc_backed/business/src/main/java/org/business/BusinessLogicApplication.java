@@ -42,7 +42,7 @@ public class BusinessLogicApplication {
     @Bean
     CommandLineRunner runner(ReservationRepository reservationRepository,
                              RestaurantRepository restaurantRepository,
-                             ReservationService reservationService) {
+                             CustomerRepository customerRepository) {
         return args -> {
             IntStream.range(0, 20).forEach(i -> {
                 Restaurant restaurant1 = new Restaurant();
@@ -62,6 +62,13 @@ public class BusinessLogicApplication {
                 }
 
                 Restaurant saved = restaurantRepository.save(restaurant1);
+
+                Customer customer = new Customer();
+                customer.setEmailAddress("test@gmail.com");
+                customer.setName("test");
+                customer.setPhoneNumber("0743177574");
+
+                customerRepository.save(customer);
 
             });
 

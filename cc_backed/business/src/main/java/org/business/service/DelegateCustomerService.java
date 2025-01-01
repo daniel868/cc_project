@@ -24,6 +24,10 @@ public class DelegateCustomerService {
         return customerService.newCustomerRequests(customerDto);
     }
 
+    public CustomerDto getCustomerByOd(Integer customerId) {
+        return customerService.loadCustomerById(customerId);
+    }
+
     public boolean manageCustomers(HttpMethod method,
                                    Integer customerId,
                                    CustomerDto customerDto) {

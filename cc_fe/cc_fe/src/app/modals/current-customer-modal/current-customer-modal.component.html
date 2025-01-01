@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <h5 class="modal-title">
+    <i class="bi me-2"></i>
+    {{ 'My Profile' }}
+  </h5>
+</div>
+
+<div class="modal-body d-flex align-items-center justify-content-center">
+  <div class="modal-content p-4 rounded">
+    <h4 class="text-center mb-4">User Profile</h4>
+    <form>
+      <div class="mb-3">
+        <label for="userName" class="form-label">Name</label>
+        <input type="text"
+               id="userName"
+               class="form-control"
+               [value]="userProfile.name"
+               readonly>
+      </div>
+
+      <div class="mb-3">
+        <label for="userPhone" class="form-label">Phone Number</label>
+        <input type="tel"
+               id="userPhone"
+               class="form-control"
+               [value]="userProfile.phoneNumber"
+               readonly>
+      </div>
+
+      <div class="mb-3">
+        <label for="userEmail" class="form-label">Email Address</label>
+        <input type="email"
+               id="userEmail"
+               class="form-control"
+               [value]="userProfile.emailAddress"
+               readonly>
+      </div>
+
+      <div class="text-center">
+        <button type="button"
+                class="btn btn-danger px-4"
+                (click)="onModalClose()">Close
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

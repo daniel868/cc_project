@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -25,6 +26,7 @@ public class RoleServiceImpl implements RoleService {
     public Role findByName(String name) {
         return roleRepository.findRoleByRole(RoleEnum.valueOf(name));
     }
+
 
     @Override
     public List<RoleDto> findAllByUser(Long userId) {

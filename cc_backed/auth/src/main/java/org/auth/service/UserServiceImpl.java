@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public void registerUser(User user) {
-        userRepository.save(user);
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
     @Override

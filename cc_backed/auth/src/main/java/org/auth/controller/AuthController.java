@@ -24,10 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClient;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -72,8 +69,12 @@ public class AuthController {
             );
             SecurityContextHolder.getContext().setAuthentication(authenticationReq);
 
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("customerId", userByUsername.getCustomerId());
+            claims.put("sub", userByUsername.getUsername());
+
             // Generate token when  authentication is successful
-            String token = jwtToken.generateToken(authentication);
+            String token = buildJwtToken(userByUsername.getUsername(), claims);
             // Store token in session
             httpSession.setAttribute("jwtToken", token);
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -111,23 +112,35 @@ public class AuthController {
 
             // Register the user
             //TODO: generate token and store in session here
-            userService.registerUser(user);
+            User savedUser = userService.saveUser(user);
+
             CustomerDto customerDto = CustomerDto
                     .builder()
                     .name(user.getUsername())
                     .emailAddress(request.getEmail())
                     .phoneNumber(request.getPhoneNumber())
                     .build();
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("roles", roleSet);
+            claims.put("sub", user.getUsername());
+            String jwtToken = buildJwtToken(user.getUsername(), claims);
 
-            String jwtToken = buildJwtToken(user.getUsername(), roleSet);
-
-            RestClient.ResponseSpec response = restClient.post()
+            ResponseEntity<CustomerDto> response = restClient.post()
                     .uri("/customers")
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", "Bearer " + jwtToken)
                     .body(customerDto)
-                    .retrieve();
-            logger.debug("");
+                    .retrieve()
+                    .toEntity(CustomerDto.class);
+
+            if (response.getBody() != null) {
+                claims.put("customerId", response.getBody().getId());
+            }
+
+            jwtToken = buildJwtToken(user.getUsername(), claims);
+            savedUser.setCustomerId(customerDto.getId());
+
+            userService.saveUser(savedUser);
 
             return ResponseEntity.ok(new SignupResponse(
                     true,
@@ -141,10 +154,10 @@ public class AuthController {
 
     }
 
-    private String buildJwtToken(String username, Set<Role> roles) {
+    private String buildJwtToken(String username, Map<String, Object> claims) {
         return Jwts.builder()
-                .setSubject(username)
-                .claim("roles", roles)
+//                .setSubject(username)
+                .setClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + expirationMs))
                 .signWith(SignatureAlgorithm.HS512, secretKey)

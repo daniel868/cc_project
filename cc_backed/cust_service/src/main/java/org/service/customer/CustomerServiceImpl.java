@@ -69,6 +69,20 @@ public class CustomerServiceImpl implements CustomerService {
         return true;
     }
 
+    @Override
+    public CustomerDto loadCustomerById(Integer customerId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElse(null);
+        if (customer == null) {
+            throw new RuntimeException("Could not find customer with id: " + customerId);
+        }
+        return CustomerDto.builder()
+                .emailAddress(customer.getEmailAddress())
+                .name(customer.getName())
+                .phoneNumber(customer.getPhoneNumber())
+                .build();
+    }
+
     private void mapFromCustomerDtoToEntity(CustomerDto customerDto, Customer customer) {
         customer.setEmailAddress(customerDto.getEmailAddress());
         customer.setName(customerDto.getName());

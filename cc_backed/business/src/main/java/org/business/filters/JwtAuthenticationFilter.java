@@ -9,10 +9,13 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.business.utils.AppConstants;
 import org.business.utils.AppUtils;
+import org.service.customer.repository.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -35,6 +38,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Value("${jwt.secretKey}")
     private String secretKey;
 
+    @Autowired
+    private HttpSession httpSession;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
@@ -52,6 +58,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (isTokenExpired(token)) {
             logger.debug("Token expired: {}", token);
             throw new RuntimeException("Invalid JWT Token");
+        }
+
+        if (extractClaims(token).get("customerId") != null) {
+            Integer customerId = (Integer) extractClaims(token).get("customerId");
+            httpSession.setAttribute("customerId", customerId);
         }
         filterChain.doFilter(request, response);
     }
@@ -82,13 +93,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean isTokenExpired(String token) {
-        Claims claims = Jwts.
+        Claims claims = extractClaims(token);
+        return claims.getExpiration().before(new Date());
+    }
+
+    private Claims extractClaims(String token) {
+        return Jwts.
                 parserBuilder()
                 .setSigningKey(generateSignInKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        return claims.getExpiration().before(new Date());
     }
 
     private Key generateSignInKey() {
