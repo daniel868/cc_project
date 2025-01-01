@@ -36,7 +36,6 @@ public class User implements UserDetails {
     @Column(name = "lastname")
     private String lastName;
 
-
     private String email;
 
     private String password;

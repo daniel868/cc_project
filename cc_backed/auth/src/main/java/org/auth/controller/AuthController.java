@@ -1,5 +1,7 @@
 package org.auth.controller;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.auth.model.*;
 import org.auth.service.RoleService;
 import org.auth.service.UserServiceImpl;
@@ -9,6 +11,7 @@ import org.service.customer.pojo.CustomerDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +24,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClient;
 
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -43,6 +48,12 @@ public class AuthController {
     private RoleService roleService;
     @Autowired
     private RestClient restClient;
+
+    @Value("${jwt.secretKey}")
+    private String secretKey;
+
+    @Value("${jwt.expirationMs}")
+    private long expirationMs;
 
 
     @PostMapping("/login")
@@ -103,18 +114,41 @@ public class AuthController {
             userService.registerUser(user);
             CustomerDto customerDto = CustomerDto
                     .builder()
+                    .name(user.getUsername())
+                    .emailAddress(request.getEmail())
+                    .phoneNumber(request.getPhoneNumber())
                     .build();
 
-            restClient.post()
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(customerDto);
+            String jwtToken = buildJwtToken(user.getUsername(), roleSet);
 
-            return ResponseEntity.ok(new SignupResponse(true, "User registered successfully", null));
+            RestClient.ResponseSpec response = restClient.post()
+                    .uri("/customers")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", "Bearer " + jwtToken)
+                    .body(customerDto)
+                    .retrieve();
+            logger.debug("");
+
+            return ResponseEntity.ok(new SignupResponse(
+                    true,
+                    "User registered successfully",
+                    jwtToken
+            ));
         } catch (Exception ex) {
             logger.error("error sign up");
             return ResponseEntity.internalServerError().body("error");
         }
 
+    }
+
+    private String buildJwtToken(String username, Set<Role> roles) {
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("roles", roles)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + expirationMs))
+                .signWith(SignatureAlgorithm.HS512, secretKey)
+                .compact();
     }
 
     private boolean isValidRole(String roleStr) {
