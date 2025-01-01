@@ -5,7 +5,7 @@ import {BsModalRef} from "ngx-bootstrap/modal";
 import {Reservation} from "../../model/reservation";
 import {AppState} from "../../common/state/app.reducer";
 import {Store} from "@ngrx/store";
-import {AddReservationAction} from "../../common/state/reservation/reservation.actions";
+import {AddReservationAction, UpdateReservationAction} from "../../common/state/reservation/reservation.actions";
 
 @Component({
   selector: 'app-add-edit-reservation-modal',
@@ -20,6 +20,9 @@ export class AddEditReservationModalComponent implements OnInit {
   @Input()
   modalTitle: string;
 
+  @Input()
+  reservation: Reservation
+
   addEditReservationForm: FormGroup;
 
   constructor(private modalRef: BsModalRef,
@@ -27,12 +30,22 @@ export class AddEditReservationModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let restaurantName = !!this.restaurant ?
+      this.restaurant.name :
+      this.reservation.restaurantName
     this.addEditReservationForm = new FormGroup({
-      restaurantName: new FormControl({value: this.restaurant.name, disabled: true}),
+      restaurantName: new FormControl({value: restaurantName, disabled: true}),
       reservationDate: new FormControl('', [Validators.required]),
       guestCount: new FormControl(1, [Validators.required, Validators.min(1)]),
       reservationGuestName: new FormControl('', [Validators.required])
     })
+
+    if (!!this.reservation) {
+      this.getFormControl('restaurantName')?.setValue(this.reservation.restaurantName)
+      this.getFormControl('reservationDate')?.setValue(this.reservation.reservationDate.toString().slice(0, 16))
+      this.getFormControl('guestCount')?.setValue(this.reservation.guestCount)
+      this.getFormControl('reservationGuestName')?.setValue(this.reservation.reservationGuestName)
+    }
   }
 
   onModalClose() {
@@ -50,8 +63,12 @@ export class AddEditReservationModalComponent implements OnInit {
       guestCount: this.getFormControl('guestCount')?.value
     }
 
-    if (!!this.restaurant.id) {
+    if (!!this.restaurant && !!this.restaurant.id) {
       this.store.dispatch(AddReservationAction({payload: payload, restaurantId: this.restaurant.id}))
+    }
+
+    if (!!this.reservation && !!this.reservation.id) {
+      this.store.dispatch(UpdateReservationAction({payload: payload, reservationId: this.reservation.id}))
     }
 
     this.onModalClose();

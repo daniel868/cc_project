@@ -26,4 +26,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
     @Query("select r from Restaurant r left join fetch r.reservations where r.id=:id")
     Optional<Restaurant> loadRestaurantByIdWithReservation(@Param("id") Integer id);
+
+    Restaurant findRestaurantByName(String name);
 }

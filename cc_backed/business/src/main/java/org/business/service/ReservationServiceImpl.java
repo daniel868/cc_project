@@ -19,11 +19,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final CustomerRepository customerRepository;
@@ -118,16 +120,23 @@ public class ReservationServiceImpl implements ReservationService {
     public boolean manageReservation(HttpMethod currentMethod,
                                      Integer reservationId,
                                      ReservationDto reservationDto) {
-        if (HttpMethod.DELETE.equals(currentMethod)) {
-            reservationRepository.deleteById(reservationId);
-            return true;
-        }
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElse(null);
 
         if (reservation == null) {
             throw new RuntimeException("Could not find reservation with id: " + reservationId);
         }
+
+        if (HttpMethod.DELETE.equals(currentMethod)) {
+            Restaurant restaurantByName = restaurantRepository.findRestaurantByName(reservation.getRestaurantName());
+            int newUpdatedSpots = restaurantByName.getAvailableSpots() + reservation.getGuestCount();
+            restaurantByName.setAvailableSpots(newUpdatedSpots);
+            restaurantRepository.save(restaurantByName);
+            reservationRepository.delete(reservation);
+            return true;
+        }
+
+        reservation.setGuestName(reservationDto.getReservationGuestName());
         reservation.setGuestCount(reservationDto.getGuestCount());
         reservation.setReservationDate(reservationDto.getReservationDate());
         reservationRepository.save(reservation);

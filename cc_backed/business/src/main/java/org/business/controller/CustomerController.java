@@ -31,14 +31,14 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}")
-    public ResponseEntity<Boolean> updateCustomer(@PathVariable Integer customerId,
+    public ResponseEntity<Boolean> updateCustomer(@PathVariable("customerId") Integer customerId,
                                                   @RequestBody CustomerDto customerDto) {
         boolean response = customerService.manageCustomers(HttpMethod.PUT, customerId, customerDto);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{customerId}")
-    public ResponseEntity<Boolean> deleteCustomer(@PathVariable Integer customerId) {
+    public ResponseEntity<Boolean> deleteCustomer(@PathVariable("customerId") Integer customerId) {
         boolean response = customerService.manageCustomers(HttpMethod.DELETE, customerId, null);
         return ResponseEntity.ok(response);
     }

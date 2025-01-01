@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AppState} from "./common/state/app.reducer";
 import {Store} from "@ngrx/store";
-import {GuestAuthAction} from "./common/state/auth/auth.actions";
+import {GuestAuthAction, StartAuthRoleAction} from "./common/state/auth/auth.actions";
+import {AuthService} from "./services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ import {GuestAuthAction} from "./common/state/auth/auth.actions";
 export class AppComponent implements OnInit {
   title = 'cc_fe';
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -19,10 +21,11 @@ export class AppComponent implements OnInit {
     let guestObj = localStorage.getItem('isGuest');
     if (guestObj) {
       response = JSON.parse(guestObj)
-      console.log("object from session " + JSON.stringify(response))
       this.store.dispatch(GuestAuthAction(response))
     }
-
+    if (this.authService.isAuthenticated()) {
+      this.store.dispatch(StartAuthRoleAction())
+    }
   }
 
 }

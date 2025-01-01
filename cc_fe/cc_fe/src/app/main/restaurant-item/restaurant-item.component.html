@@ -14,9 +14,10 @@
           <i class="bi bi-three-dots">...</i> <!-- Bootstrap Icons or custom dots -->
         </button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreOptionsMenu">
-          <li><a class="dropdown-item" (click)="onEditRestaurantClicked(restaurant)">Edit</a></li>
+          <li *ngIf="isAdmin"><a class="dropdown-item" (click)="onEditRestaurantClicked(restaurant)">Edit</a></li>
           <li><a class="dropdown-item" (click)="onDetailsViewClicked(restaurant)">View details</a></li>
-          <li><a class="dropdown-item" (click)="onDeleteRestaurant(restaurant)">Delete restaurant</a></li>
+          <li *ngIf="isAdmin"><a class="dropdown-item" (click)="onDeleteRestaurant(restaurant)">Delete restaurant</a>
+          </li>
         </ul>
       </div>
     </h5>

@@ -52,12 +52,14 @@ public class BusinessLogicApplication {
                 restaurant1.setImageUrl("https://plus.unsplash.com/premium_photo-1661883237884-263e8de8869b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmVzdGF1cmFudHxlbnwwfHwwfHx8MA%3D%3D");
                 restaurant1.setDescription("restaurantDescription" + i);
 
-                Reservation reservation = new Reservation();
-                reservation.setGuestCount(i + 10);
-                reservation.setGuestName("guest" + i);
-                reservation.setReservationDate(new Date(System.currentTimeMillis() + (60 * 60 * 1000)));
-                reservation.setRestaurantName("restaurant" + i);
-                restaurant1.addReservation(reservation);
+                if (i < 10) {
+                    Reservation reservation = new Reservation();
+                    reservation.setGuestCount(i + 10);
+                    reservation.setGuestName("guest" + i);
+                    reservation.setReservationDate(new Date(System.currentTimeMillis() + (60 * 60 * 1000)));
+                    reservation.setRestaurantName("restaurant" + i);
+                    restaurant1.addReservation(reservation);
+                }
 
                 Restaurant saved = restaurantRepository.save(restaurant1);
 

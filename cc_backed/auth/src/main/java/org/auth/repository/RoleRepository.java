@@ -13,6 +13,4 @@ import java.util.List;
 public interface RoleRepository extends JpaRepository<Role, Long> {
     Role findRoleByRole(RoleEnum role);
 
-    @Query("select u,u.roles from User u left join fetch u.roles where u.userId =:userId")
-    List<Role> findAllRoleByUser(@Param("userId") Long userId);
 }

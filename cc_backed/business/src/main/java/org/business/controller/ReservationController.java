@@ -46,7 +46,7 @@ public class ReservationController {
 
     @PutMapping(value = "/{reservationId}")
     public ResponseEntity<Boolean> updateReservation(@RequestBody ReservationDto reservationDto,
-                                                     @PathVariable Integer reservationId) {
+                                                     @PathVariable("reservationId") Integer reservationId) {
         boolean response = reservationService.manageReservation(
                 HttpMethod.PUT,
                 reservationId,
@@ -55,7 +55,8 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{reservationId}")
-    public ResponseEntity<Boolean> deleteReservation(@PathVariable Integer reservationId) {
+    public ResponseEntity<Boolean> deleteReservation(@PathVariable("reservationId")
+                                                     Integer reservationId) {
         boolean response = reservationService.manageReservation(
                 HttpMethod.DELETE,
                 reservationId,

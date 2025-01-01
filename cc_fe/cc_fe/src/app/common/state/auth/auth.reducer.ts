@@ -3,21 +3,21 @@ import {createReducer, on} from "@ngrx/store";
 import {GuestAuthAction, StoreAuthRoleAction} from "./auth.actions";
 
 export interface AuthState {
-  role: ROLE | null,
+  roles: ROLE[] | null,
   isGuest: boolean
 }
 
 const initialState: AuthState = {
-  role: null,
+  roles: [],
   isGuest: false
 }
 
 export const authReducer = createReducer(
   initialState,
-  on(StoreAuthRoleAction, (state, {role}) => {
+  on(StoreAuthRoleAction, (state, {userRoles}) => {
     return {
       ...state,
-      role: role
+      roles: userRoles
     }
   }),
   on(GuestAuthAction, (state, {guestValue}) => {

@@ -3,16 +3,17 @@ package org.service.customer;
 import org.service.customer.model.Customer;
 import org.service.customer.pojo.CustomerDto;
 import org.service.customer.repository.CustomerRepository;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
 

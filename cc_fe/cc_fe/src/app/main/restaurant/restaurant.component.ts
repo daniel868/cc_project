@@ -31,6 +31,8 @@ export class RestaurantComponent implements OnInit, OnDestroy {
 
   transformedData: Restaurant[] = [];
 
+  isAdmin: boolean = false;
+
   constructor(private store: Store<AppState>,
               private modalService: BsModalService) {
   }
@@ -69,6 +71,15 @@ export class RestaurantComponent implements OnInit, OnDestroy {
         searchString: this.searchString,
         guestFilterCount: this.guestFilterNumber
       }))
+    })
+
+    this.store.select('authState')
+      .pipe(
+        map(state => state.roles)
+      ).subscribe(roles => {
+      if (!!roles) {
+        this.isAdmin = !!roles.find(role => role.roleName === 'ADMIN')
+      }
     })
   }
 

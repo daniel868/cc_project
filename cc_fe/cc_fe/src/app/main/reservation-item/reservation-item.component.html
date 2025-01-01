@@ -27,7 +27,7 @@
       <strong>Date:</strong> {{ reservation.reservationDate | date:'fullDate' }}
     </p>
     <p class="card-text">
-      <strong>Time:</strong> {{ reservation.reservationDate | date:'shortTime' }}
+      <strong>Time:</strong> {{ reservation.reservationDate | date:'shortTime':'UTC' }}
     </p>
     <p class="card-text">
       <strong>Guests:</strong> {{ reservation.guestCount }}
@@ -37,6 +37,6 @@
   <!-- Footer Buttons -->
   <div class="card-footer text-muted d-flex justify-content-between align-items-center">
     <small>Confirmed</small>
-    <button class="btn btn-outline-primary btn-sm" (click)="onViewDetails(reservation)">View Details</button>
+    <button class="btn btn-outline-primary btn-sm" (click)="onViewDetails(restaurant)">View Details</button>
   </div>
 </div>

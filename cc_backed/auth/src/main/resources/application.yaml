@@ -8,6 +8,7 @@ logging:
   level:
     org:
       business.*: debug
+      springframework.transaction.interceptor*: TRACE
     root: info
 spring:
   datasource:

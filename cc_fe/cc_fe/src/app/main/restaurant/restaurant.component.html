@@ -27,15 +27,18 @@
       </select>
     </div>
 
-    <div class="col-md-2">
-      <button class="btn btn-outline-primary search-bar" type="button" (click)="showAddRestaurantModal()">Add restaurant</button>
+    <div class="col-md-2" *ngIf="isAdmin">
+      <button class="btn btn-outline-primary search-bar" type="button" (click)="showAddRestaurantModal()">Add
+        restaurant
+      </button>
     </div>
 
   </div>
 
   <div class="row">
     <div class="col-md-4" *ngFor="let restaurant of transformedData">
-      <app-restaurant-item [restaurant]="restaurant"></app-restaurant-item>
+      <app-restaurant-item [restaurant]="restaurant"
+                           [isAdmin]="isAdmin"></app-restaurant-item>
     </div>
   </div>
 

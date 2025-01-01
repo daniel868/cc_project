@@ -18,3 +18,12 @@ export const AddReservationAction = createAction('[Reservation] Add Reservation'
   payload: Reservation,
   restaurantId: number
 }>())
+
+export const UpdateReservationAction = createAction('[Reservation] Update Reservation', props<{
+  payload: Reservation,
+  reservationId: number
+}>())
+
+export const DeleteReservationAction = createAction('[Reservation] Delete Reservation', props<{
+  reservationId: number
+}>())

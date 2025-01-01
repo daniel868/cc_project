@@ -22,6 +22,9 @@ export class RestaurantItemComponent implements OnInit {
   @Input()
   restaurant: Restaurant | null = null
 
+  @Input()
+  isAdmin: boolean = false;
+
   constructor(private modalService: BsModalService,
               private store: Store<AppState>) {
   }

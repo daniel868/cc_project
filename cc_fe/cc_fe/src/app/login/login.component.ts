@@ -7,7 +7,7 @@ import {environment} from "../../environments/environment";
 import {AppState} from "../common/state/app.reducer";
 import {Store} from "@ngrx/store";
 import {
-  GuestAuthAction,
+  GuestAuthAction, StartAuthRoleAction,
   StoreAuthRoleAction
 } from "../common/state/auth/auth.actions";
 import {ROLE} from "../model/role";
@@ -32,6 +32,7 @@ export class LoginComponent {
         localStorage.setItem('jwt', response.jwt);
         this.router.navigate(['/main/restaurants']);
         this.store.dispatch(GuestAuthAction({guestValue: false}))
+        this.store.dispatch(StartAuthRoleAction())
       }, error => {
         console.error(error);
       });
@@ -42,7 +43,6 @@ export class LoginComponent {
   }
 
   onContinueAsGuest() {
-    this.store.dispatch(StoreAuthRoleAction({role: ROLE.ADMIN}))
     this.store.dispatch(GuestAuthAction({guestValue: true}))
     this.router.navigate(['/main/restaurants']);
   }
