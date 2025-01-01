@@ -5,10 +5,12 @@ import org.auth.service.RoleService;
 import org.auth.service.UserServiceImpl;
 
 import jakarta.servlet.http.HttpSession;
+import org.service.customer.pojo.CustomerDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +19,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClient;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,6 +41,8 @@ public class AuthController {
     private HttpSession httpSession;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private RestClient restClient;
 
 
     @PostMapping("/login")
@@ -94,7 +99,15 @@ public class AuthController {
                     .build();
 
             // Register the user
+            //TODO: generate token and store in session here
             userService.registerUser(user);
+            CustomerDto customerDto = CustomerDto
+                    .builder()
+                    .build();
+
+            restClient.post()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(customerDto);
 
             return ResponseEntity.ok(new SignupResponse(true, "User registered successfully", null));
         } catch (Exception ex) {
