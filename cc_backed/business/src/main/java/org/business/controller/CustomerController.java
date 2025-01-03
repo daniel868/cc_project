@@ -3,13 +3,11 @@ package org.business.controller;
 import jakarta.servlet.http.HttpSession;
 import org.business.service.DelegateCustomerService;
 import org.service.customer.pojo.CustomerDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -37,7 +35,7 @@ public class CustomerController {
     @GetMapping("/currentCustomer")
     public ResponseEntity<CustomerDto> getCurrentCustomer() {
         Integer customerId = (Integer) httpSession.getAttribute("customerId");
-        CustomerDto response = customerService.getCustomerByOd(customerId);
+        CustomerDto response = customerService.getCustomerById(customerId);
         return ResponseEntity.ok(response);
     }
 

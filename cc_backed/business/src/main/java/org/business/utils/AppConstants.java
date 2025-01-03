@@ -15,7 +15,11 @@ public class AppConstants {
             new WhiteListAPI(HttpMethod.GET, "^/reservations$"),
             new WhiteListAPI(HttpMethod.POST, "^/reservations/([^/]+)$"),
             new WhiteListAPI(HttpMethod.PUT, "^/reservations/([^/]+)$"),
-            new WhiteListAPI(HttpMethod.DELETE, "^/reservations/([^/]+)$")
+            new WhiteListAPI(HttpMethod.DELETE, "^/reservations/([^/]+)$"),
+            new WhiteListAPI(HttpMethod.GET,"^/h2-console/.*$"),
+            new WhiteListAPI(HttpMethod.POST,"^/h2-console/.*$"),
+            new WhiteListAPI(HttpMethod.PUT,"^/h2-console/.*$"),
+            new WhiteListAPI(HttpMethod.DELETE,"^/h2-console/.*$")
     );
 
     @Getter

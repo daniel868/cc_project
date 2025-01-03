@@ -66,7 +66,7 @@ public class BusinessLogicApplication {
                 Customer customer = new Customer();
                 customer.setEmailAddress("test@gmail.com");
                 customer.setName("test");
-                customer.setPhoneNumber("0743177574");
+                customer.setPhoneNumber("0721311421");
 
                 customerRepository.save(customer);
 

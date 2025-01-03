@@ -38,7 +38,7 @@ public class PersistenceConfig {
         HashMap<String, Object> properties = new HashMap<>();
         properties.put("hibernate.hbm2ddl.auto", "create-drop");
         properties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-        properties.put("hibernate.show_sql","true");
+        properties.put("hibernate.show_sql", "true");
         return builder.dataSource(dataSource)
                 .packages(Customer.class, Reservation.class, Restaurant.class)
                 .properties(properties)
@@ -52,4 +52,5 @@ public class PersistenceConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
         return transactionManager;
     }
+
 }

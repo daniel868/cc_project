@@ -24,7 +24,7 @@ public class DelegateCustomerService {
         return customerService.newCustomerRequests(customerDto);
     }
 
-    public CustomerDto getCustomerByOd(Integer customerId) {
+    public CustomerDto getCustomerById(Integer customerId) {
         return customerService.loadCustomerById(customerId);
     }
 

@@ -7,3 +7,8 @@ export const StartFetchCurrentCustomer = createAction('[Customer] Start Fetch Cu
 export const FinishFetchCurrentCustomer = createAction('[Customer] Finish Fetch Current Customer', props<{
   customer: Customer
 }>());
+
+export const UpdateCustomerAction = createAction('[Customer] Update Customer', props<{
+  id: number,
+  customer: Customer
+}>());
