@@ -2,24 +2,30 @@ import {inject, Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {
-  AddRestaurantAction, DeleteRestaurantAction,
+  AddRestaurantAction,
+  DeleteRestaurantAction,
   EditRestaurantAction,
+  FinishFetchRestaurantByNameAction,
   FinishFetchRestaurantsAction,
+  ShowRestaurantInfoModal,
+  StartFetchRestaurantByNameAction,
   StartFetchRestaurantsAction
 } from "./restaurant.actions";
 import {catchError, exhaustMap, map, of, switchMap, tap} from "rxjs";
 import {PageableGenericResponse} from "../../shared/pageable-generic-response";
 import {Restaurant} from "../../../model/restaurant";
 import {environment} from "../../../../environments/environment";
+import {GenericFailedAction, GenericSuccessAction} from "../shared/shared.actions";
 import {BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {GenericSuccessModalComponent} from "../../../modals/generic-success-modal/generic-success-modal.component";
-import {GenericFailedAction, GenericSuccessAction} from "../shared/shared.actions";
+import {RestaurantInfoModalComponent} from "../../../modals/restaurant-info-modal/restaurant-info-modal.component";
 
 @Injectable()
 export class RestaurantEffects {
   private actions$ = inject(Actions)
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              private modalService: BsModalService) {
 
   }
 
@@ -40,6 +46,28 @@ export class RestaurantEffects {
             }),
             catchError((error) => {
               return of(GenericFailedAction({message: "Error occurred fetching restaurants"}))
+            })
+          )
+      })
+    )
+  )
+
+  loadRestaurantByNameEffect = createEffect(() =>
+    this.actions$.pipe(
+      ofType(StartFetchRestaurantByNameAction),
+      switchMap(props => {
+        return this.httpClient.get<Restaurant>(`${environment.business_base_url}/restaurants/name/${props.restaurantName}`)
+          .pipe(
+            exhaustMap(response => {
+              let actionArray = []
+              actionArray.push(FinishFetchRestaurantByNameAction({restaurant: response}))
+              if (props.showRestaurantModalInfo) {
+                actionArray.push(ShowRestaurantInfoModal({restaurant: response}))
+              }
+              return actionArray
+            }),
+            catchError((error) => {
+              return of(GenericFailedAction({message: "Error occurred fetching restaurant details"}))
             })
           )
       })
@@ -133,6 +161,24 @@ export class RestaurantEffects {
           )
       })
     )
+  )
+
+  showRestaurantInfoModalEffect = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ShowRestaurantInfoModal),
+      map(actionProps => {
+        const initialState = {
+          restaurant: actionProps.restaurant,
+        };
+
+        const modalOptions: ModalOptions = {
+          initialState: initialState,
+          backdrop: true,  // Enables backdrop click to close the modal
+          keyboard: true,  // Close the modal when pressing escape
+        };
+        this.modalService.show(RestaurantInfoModalComponent, modalOptions);
+      })
+    ), {dispatch: false}
   )
 
 }

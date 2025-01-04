@@ -8,9 +8,9 @@ import {AppState} from "../../common/state/app.reducer";
 import {Store} from "@ngrx/store";
 import {DeleteReservationAction} from "../../common/state/reservation/reservation.actions";
 import {Restaurant} from "../../model/restaurant";
-import {filter, from, map, Observable, Subscription, switchMap, take} from "rxjs";
+import {filter, from, map, Subscription, switchMap, take, tap} from "rxjs";
 import {RestaurantInfoModalComponent} from "../../modals/restaurant-info-modal/restaurant-info-modal.component";
-import {initialState} from "ngx-bootstrap/timepicker/reducer/timepicker.reducer";
+import {StartFetchRestaurantByNameAction} from "../../common/state/restaurant/restaurant.actions";
 
 @Component({
   selector: 'app-reservation-item',
@@ -31,15 +31,14 @@ export class ReservationItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.select('restaurantState')
+    this.restaurantSubscription = this.store.select('restaurantState')
       .pipe(
         map(response => response.restaurants?.payload || []),
         switchMap(restaurants => from(restaurants)),
-        filter(restaurant => restaurant.name === this.reservation.restaurantName),
-        take(1),
+        filter(restaurant => restaurant.name === this.reservation.restaurantName)
       ).subscribe(response => {
-      this.restaurant = response;
-    });
+        this.restaurant = response;
+      });
   }
 
   onEditReservation(reservation: Reservation) {
@@ -65,18 +64,24 @@ export class ReservationItemComponent implements OnInit, OnDestroy {
   }
 
   onViewDetails(restaurant: Restaurant | null) {
-    console.log(JSON.stringify(restaurant))
-    const initialState = {
-      restaurant: restaurant
-    };
+    if (restaurant === undefined) {
+      this.store.dispatch(StartFetchRestaurantByNameAction({
+        restaurantName: this.reservation.restaurantName,
+        showRestaurantModalInfo: true
+      }))
+    } else {
+      const initialState = {
+        restaurant: restaurant,
+        restaurantName: this.reservation.restaurantName
+      };
 
-    const modalOptions: ModalOptions = {
-      initialState: initialState,
-      backdrop: true,  // Enables backdrop click to close the modal
-      keyboard: true,  // Close the modal when pressing escape
-    };
-    this.modalService.show(RestaurantInfoModalComponent, modalOptions);
-
+      const modalOptions: ModalOptions = {
+        initialState: initialState,
+        backdrop: true,  // Enables backdrop click to close the modal
+        keyboard: true,  // Close the modal when pressing escape
+      };
+      this.modalService.show(RestaurantInfoModalComponent, modalOptions);
+    }
   };
 
   ngOnDestroy(): void {

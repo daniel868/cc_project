@@ -1,0 +1,142 @@
+[
+  {
+    "name": "The Gourmet Haven",
+    "address": "123 Foodie Lane, Culinary City, CC 10101",
+    "availableSpots": 50,
+    "imageUrl": "https://plus.unsplash.com/premium_photo-1661883237884-263e8de8869b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmVzdGF1cmFudHxlbnwwfHwwfHx8MA%3D%3D",
+    "description": "A fine dining experience offering an exquisite fusion of global cuisines."
+  },
+  {
+    "name": "Urban Bistro",
+    "address": "456 Downtown Blvd, Metropolis, MT 20202",
+    "availableSpots": 30,
+    "imageUrl": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHxlbnwwfHwwfHx8MA%3D%3D",
+    "description": "Modern bistro serving hearty meals with a contemporary twist in a cozy atmosphere."
+  },
+  {
+    "name": "Seafood Paradise",
+    "address": "789 Ocean Drive, Harborview, HV 30303",
+    "availableSpots": 75,
+    "imageUrl": "https://t3.ftcdn.net/jpg/03/24/73/92/360_F_324739203_keeq8udvv0P2h1MLYJ0GLSlTBagoXS48.jpg",
+    "description": "Fresh and flavorful seafood dishes with a scenic waterfront view."
+  },
+  {
+    "name": "Pizza Delight",
+    "address": "101 Crusty Ave, Cheesy Town, CT 40404",
+    "availableSpots": 20,
+    "imageUrl": "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3Vwd2s2MTY2MTU3Ny13aWtpbWVkaWEtaW1hZ2Uta293YXBlZWouanBn.jpg",
+    "description": "Home of the best wood-fired pizzas in town, made with fresh, organic ingredients."
+  },
+  {
+    "name": "Green Garden Café",
+    "address": "202 Healthy St, Greenfield, GF 50505",
+    "availableSpots": 40,
+    "imageUrl": "https://img.freepik.com/free-photo/restaurant-interior_1127-3394.jpg",
+    "description": "A vibrant café specializing in vegan and vegetarian dishes with locally sourced produce."
+  },
+  {
+    "name": "The Burger Joint",
+    "address": "303 Grill Road, Burgerville, BV 60606",
+    "availableSpots": 15,
+    "imageUrl": "https://cdn10.bostonmagazine.com/wp-content/uploads/sites/2/2023/10/beacon_restaurants-2.jpg",
+    "description": "Classic and gourmet burgers grilled to perfection, with a variety of sides and sauces."
+  },
+  {
+    "name": "Spice Symphony",
+    "address": "404 Curry St, Spicetown, ST 70707",
+    "availableSpots": 60,
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Barbieri_-_ViaSophia25668.jpg/1200px-Barbieri_-_ViaSophia25668.jpg",
+    "description": "A celebration of bold flavors and aromatic spices in every dish."
+  },
+  {
+    "name": "Mountain View Lodge",
+    "address": "505 Alpine Rd, Snowpeak, SP 80808",
+    "availableSpots": 35,
+    "imageUrl": "https://cdn.sortiraparis.com/images/80/100789/834071-too-restaurant-too-hotel-paris-photos-menu-entrees.jpg",
+    "description": "Rustic charm meets gourmet cuisine in this mountainside retreat."
+  },
+  {
+    "name": "Cafe Noir",
+    "address": "606 Coffee Lane, Brewtown, BW 90909",
+    "availableSpots": 25,
+    "imageUrl": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085",
+    "description": "An intimate café offering specialty coffees and artisan desserts."
+  },
+  {
+    "name": "Mediterraneo",
+    "address": "707 Olive Ave, Santorini, SN 10110",
+    "availableSpots": 45,
+    "imageUrl": "https://img.freepik.com/premium-photo/restaurant-food-restaurant-menu-photos-menu_830198-777.jpg?semt=ais_hybrid",
+    "description": "Authentic Mediterranean cuisine with an emphasis on fresh seafood and olive oil."
+  },
+  {
+    "name": "Sushi Bliss",
+    "address": "808 Sake St, Tokyoville, TV 11111",
+    "availableSpots": 35,
+    "imageUrl": "https://plus.unsplash.com/premium_photo-1670984940113-f3aa1cd1309a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmVzdGF1cmFudHN8ZW58MHx8MHx8fDA%3D",
+    "description": "Premium sushi and sashimi crafted by master chefs in an elegant setting."
+  },
+  {
+    "name": "The Steakhouse",
+    "address": "909 Angus Ave, Meat City, MC 12121",
+    "availableSpots": 50,
+    "imageUrl": "https://images.unsplash.com/photo-1551183053-bf91a1d81141",
+    "description": "Top-quality steaks cooked to perfection in a warm, inviting atmosphere."
+  },
+  {
+    "name": "Pasta Perfection",
+    "address": "1010 Noodle Lane, Roma Town, RT 13131",
+    "availableSpots": 40,
+    "imageUrl": "https://images.unsplash.com/photo-1481931098730-318b6f776db0?q=80&w=1980&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "Authentic Italian pasta dishes made with love and the finest ingredients."
+  },
+  {
+    "name": "Taco Fiesta",
+    "address": "1111 Spice Road, Mexicana, MX 14141",
+    "availableSpots": 20,
+    "imageUrl": "https://images.unsplash.com/photo-1713667417761-408ec68c3af1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "A lively taqueria serving up bold and flavorful Mexican street food."
+  },
+  {
+    "name": "The Artisan Table",
+    "address": "1212 Craft St, Artistry City, AC 15151",
+    "availableSpots": 25,
+    "imageUrl": "https://images.unsplash.com/photo-1646241651636-49549005a1a3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "Farm-to-table dining with a focus on seasonal and sustainable ingredients."
+  },
+  {
+    "name": "Dim Sum Delight",
+    "address": "1313 Canton Blvd, Chinatown, CT 16161",
+    "availableSpots": 60,
+    "imageUrl": "https://images.unsplash.com/photo-1502998070258-dc1338445ac2?q=80&w=1958&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "A wide variety of delicious dim sum served fresh daily in a bustling atmosphere."
+  },
+  {
+    "name": "BBQ Barn",
+    "address": "1414 Grill Lane, Smokeville, SV 17171",
+    "availableSpots": 70,
+    "imageUrl": "https://images.unsplash.com/photo-1488992783499-418eb1f62d08?q=80&w=1978&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "Slow-smoked barbecue meats with classic sides and a hearty dose of flavor."
+  },
+  {
+    "name": "Choco Loco",
+    "address": "1515 Cocoa Blvd, Sweet City, SC 18181",
+    "availableSpots": 30,
+    "imageUrl": "https://images.unsplash.com/photo-1658413382919-3457db79f9e9?q=80&w=2083&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "A dessert café specializing in artisanal chocolates and decadent desserts."
+  },
+  {
+    "name": "Taste of India",
+    "address": "1616 Spice Lane, Curry Town, CT 19191",
+    "availableSpots": 55,
+    "imageUrl": "https://plus.unsplash.com/premium_photo-1723928494246-0c38f1bdf204?q=80&w=2066&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "A rich and vibrant menu featuring traditional Indian flavors and modern interpretations."
+  },
+  {
+    "name": "Fusion Flavors",
+    "address": "1717 Mix Blvd, Global City, GC 20202",
+    "availableSpots": 45,
+    "imageUrl": "https://images.unsplash.com/photo-1489209909448-8926a2640f1f?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "description": "A unique blend of culinary traditions from around the world, crafted into stunning dishes."
+  }
+]

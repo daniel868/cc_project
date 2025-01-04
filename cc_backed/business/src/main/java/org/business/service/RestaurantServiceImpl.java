@@ -75,6 +75,22 @@ public class RestaurantServiceImpl implements RestaurantService {
         return true;
     }
 
+    @Override
+    public RestaurantDto loadRestaurantByName(String restaurantName) {
+        Restaurant restaurantByName = restaurantRepository.findRestaurantByName(restaurantName);
+        if (restaurantByName == null) {
+            throw new RuntimeException("Could not found restaurant with name: " + restaurantName);
+        }
+        RestaurantDto restaurantDto = new RestaurantDto();
+        restaurantDto.setAddress(restaurantByName.getAddress());
+        restaurantDto.setAvailableSpots(restaurantByName.getAvailableSpots());
+        restaurantDto.setDescription(restaurantByName.getDescription());
+        restaurantDto.setImageUrl(restaurantByName.getImageUrl());
+        restaurantDto.setId(restaurantByName.getId());
+        restaurantDto.setName(restaurantByName.getName());
+        return restaurantDto;
+    }
+
     private Page<Restaurant> buildRestaurantSearchQuery(Pageable pageable, String searchString, Integer guestCountFilter) {
         boolean emptySearchString = StringUtil.isNullOrEmpty(searchString);
         boolean emptyGuestCountFilter = (guestCountFilter == null || guestCountFilter.equals(-1));

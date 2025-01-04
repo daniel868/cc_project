@@ -28,6 +28,12 @@ public class RestaurantController {
         return restaurantService.showAvailableRestaurants(pageable, searchString, guestCountFilter);
     }
 
+    @GetMapping("/name/{restaurantName}")
+    public ResponseEntity<RestaurantDto> getRestaurantByName(@PathVariable("restaurantName") String restaurantName) {
+        RestaurantDto payload = restaurantService.loadRestaurantByName(restaurantName);
+        return ResponseEntity.ok(payload);
+    }
+
     @PostMapping(path = "")
     public ResponseEntity<RestaurantDto> addNewRestaurant(@RequestBody RestaurantDto restaurantDto) {
         RestaurantDto response = restaurantService.addNewRestaurant(restaurantDto);

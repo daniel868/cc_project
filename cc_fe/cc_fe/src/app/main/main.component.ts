@@ -7,6 +7,7 @@ import {map, Subscription} from "rxjs";
 import {state} from "@angular/animations";
 import {AuthService} from "../services/auth.service";
 import {StartFetchCurrentCustomer} from "../common/state/customer/customer.actions";
+import {StartFetchRestaurantByNameAction} from "../common/state/restaurant/restaurant.actions";
 
 @Component({
   selector: 'app-main',
@@ -34,7 +35,7 @@ export class MainComponent implements OnInit, OnDestroy {
         }
       });
 
-    if (this.authService.isAuthenticated()){
+    if (this.authService.isAuthenticated()) {
       this.store.dispatch(StartFetchCurrentCustomer())
     }
   }

@@ -37,7 +37,8 @@ export class AddEditReservationModalComponent implements OnInit {
       restaurantName: new FormControl({value: restaurantName, disabled: true}),
       reservationDate: new FormControl('', [Validators.required]),
       guestCount: new FormControl(1, [Validators.required, Validators.min(1)]),
-      reservationGuestName: new FormControl('', [Validators.required])
+      reservationGuestName: new FormControl('', [Validators.required]),
+      reservationGuestPhone: new FormControl('', [Validators.required])
     })
 
     if (!!this.reservation) {
@@ -45,6 +46,7 @@ export class AddEditReservationModalComponent implements OnInit {
       this.getFormControl('reservationDate')?.setValue(this.reservation.reservationDate.toString().slice(0, 16))
       this.getFormControl('guestCount')?.setValue(this.reservation.guestCount)
       this.getFormControl('reservationGuestName')?.setValue(this.reservation.reservationGuestName)
+      this.getFormControl('reservationGuestPhone')?.setValue("0723123121")
     }
   }
 

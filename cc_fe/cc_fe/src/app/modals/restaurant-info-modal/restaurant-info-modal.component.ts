@@ -1,6 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Restaurant} from "../../model/restaurant";
 import {BsModalRef} from "ngx-bootstrap/modal";
+import {StartFetchRestaurantByNameAction} from "../../common/state/restaurant/restaurant.actions";
+import {AppState} from "../../common/state/app.reducer";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-restaurant-info-modal',
@@ -12,10 +15,15 @@ export class RestaurantInfoModalComponent implements OnInit {
   @Input()
   restaurant: Restaurant
 
-  constructor(private modalRef: BsModalRef) {
+  @Input()
+  restaurantName: string
+
+  constructor(private modalRef: BsModalRef,
+              private store: Store<AppState>) {
   }
 
   ngOnInit(): void {
+
   }
 
   onModalClose() {

@@ -1,8 +1,11 @@
 package org.business;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.business.model.Reservation;
 import org.business.model.Restaurant;
 import org.business.pojo.ReservationDto;
+import org.business.pojo.RestaurantDto;
 import org.business.repository.ReservationRepository;
 import org.business.repository.RestaurantRepository;
 import org.business.service.ReservationService;
@@ -21,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -44,33 +48,38 @@ public class BusinessLogicApplication {
                              RestaurantRepository restaurantRepository,
                              CustomerRepository customerRepository) {
         return args -> {
-            IntStream.range(0, 20).forEach(i -> {
-                Restaurant restaurant1 = new Restaurant();
-                restaurant1.setName("restaurant" + i);
-                restaurant1.setAddress("address" + i);
-                restaurant1.setAvailableSpots(new Random().nextInt(0, 100));
-                restaurant1.setImageUrl("https://plus.unsplash.com/premium_photo-1661883237884-263e8de8869b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmVzdGF1cmFudHxlbnwwfHwwfHx8MA%3D%3D");
-                restaurant1.setDescription("restaurantDescription" + i);
+            ObjectMapper objectMapper = new ObjectMapper();
+            try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("restaurantMock.json")) {
+                List<RestaurantDto> jsonMockData = objectMapper.readValue(in, new TypeReference<List<RestaurantDto>>() {
+                });
 
-                if (i < 10) {
+                jsonMockData.forEach(restaurantDto -> {
+                    Restaurant restaurant = new Restaurant();
+                    restaurant.setAvailableSpots(restaurantDto.getAvailableSpots());
+                    restaurant.setName(restaurantDto.getName());
+                    restaurant.setImageUrl(restaurantDto.getImageUrl());
+                    restaurant.setAddress(restaurantDto.getAddress());
+                    restaurant.setDescription(restaurantDto.getDescription());
+
                     Reservation reservation = new Reservation();
-                    reservation.setGuestCount(i + 10);
-                    reservation.setGuestName("guest" + i);
+                    reservation.setGuestCount(new Random().nextInt(0, 20));
+                    reservation.setGuestName("guestName");
                     reservation.setReservationDate(new Date(System.currentTimeMillis() + (60 * 60 * 1000)));
-                    reservation.setRestaurantName("restaurant" + i);
-                    restaurant1.addReservation(reservation);
-                }
+                    reservation.setRestaurantName(restaurant.getName());
+                    restaurant.addReservation(reservation);
 
-                Restaurant saved = restaurantRepository.save(restaurant1);
+                    restaurantRepository.save(restaurant);
+                });
+            }
 
-                Customer customer = new Customer();
-                customer.setEmailAddress("test@gmail.com");
-                customer.setName("test");
-                customer.setPhoneNumber("0721311421");
+            Customer customer = new Customer();
+            customer.setEmailAddress("test@gmail.com");
+            customer.setName("test");
+            customer.setPhoneNumber("0721311421");
 
-                customerRepository.save(customer);
-
-            });
+            customerRepository.save(customer);
+//
+//            });
 
         };
     }

@@ -1,6 +1,5 @@
 package org.auth.controller;
 
-import org.auth.model.SignupRequest;
 import org.auth.model.User;
 import org.auth.repository.UserRepository;
 import org.service.customer.pojo.CustomerDto;
@@ -28,7 +27,7 @@ public class UserController {
         user.setUsername(customerDto.getName());
         user.setEmail(customerDto.getPhoneNumber());
 
-        User saved = userRepository.save(user);
+        userRepository.save(user);
         return ResponseEntity.ok(true);
     }
 }

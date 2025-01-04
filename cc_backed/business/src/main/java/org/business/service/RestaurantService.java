@@ -19,4 +19,6 @@ public interface RestaurantService {
     boolean manageRestaurants(HttpMethod method,
                               Integer restaurantId,
                               RestaurantDto restaurantDto);
+
+    RestaurantDto loadRestaurantByName(String restaurantName);
 }
