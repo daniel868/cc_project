@@ -6,6 +6,7 @@ import {environment} from "../../../environments/environment.prod";
 import {debounceTime, map, Subscription} from "rxjs";
 import {Reservation} from "../../model/reservation";
 import {PageEvent} from "@angular/material/paginator";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-reservation',
@@ -23,19 +24,27 @@ export class ReservationComponent implements OnInit, OnDestroy {
 
   searchStringEventEmitter: EventEmitter<string> = new EventEmitter<string>();
   searchStringSubscription = new Subscription();
+  loadOnlyCustomerReservation:boolean = false
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(StartFetchReservationAction({
-      pageable: {
-        page: environment.default_page_number,
-        size: environment.default_page_size
-      },
-      searchString: '',
-      searchDate: null
-    }));
+    this.route.data.subscribe(data=>{
+      this.loadOnlyCustomerReservation = data['loadOnlyCustomerReservation']
+      this.store.dispatch(StartFetchReservationAction({
+        pageable: {
+          page: environment.default_page_number,
+          size: environment.default_page_size
+        },
+        searchString: '',
+        searchDate: null,
+        loadOnlyForCurrentCustomer: this.loadOnlyCustomerReservation
+      }));
+    })
+
+
 
     this.store.select('reservationsState').pipe(
       map(reservationState => reservationState.reservations)
@@ -56,7 +65,8 @@ export class ReservationComponent implements OnInit, OnDestroy {
           size: environment.default_page_size
         },
         searchString: this.searchString,
-        searchDate: this.longSearchDate
+        searchDate: this.longSearchDate,
+        loadOnlyForCurrentCustomer: this.loadOnlyCustomerReservation
       }));
     });
   }
@@ -71,7 +81,8 @@ export class ReservationComponent implements OnInit, OnDestroy {
         size: newPageSize
       },
       searchString: this.searchString,
-      searchDate: this.longSearchDate
+      searchDate: this.longSearchDate,
+      loadOnlyForCurrentCustomer: this.loadOnlyCustomerReservation
     }));
   }
 
@@ -92,7 +103,8 @@ export class ReservationComponent implements OnInit, OnDestroy {
         size: environment.default_page_size
       },
       searchString: this.searchString,
-      searchDate: this.longSearchDate
+      searchDate: this.longSearchDate,
+      loadOnlyForCurrentCustomer: this.loadOnlyCustomerReservation
     }));
   }
 

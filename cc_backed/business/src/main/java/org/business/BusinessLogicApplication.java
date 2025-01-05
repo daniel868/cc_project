@@ -64,7 +64,7 @@ public class BusinessLogicApplication {
                     Reservation reservation = new Reservation();
                     reservation.setGuestCount(new Random().nextInt(0, 20));
                     reservation.setGuestName("guestName");
-                    reservation.setReservationDate(new Date(System.currentTimeMillis() + (60 * 60 * 1000)));
+                    reservation.setReservationDate(new Date(System.currentTimeMillis() + (new Random().nextLong(0, 300) * 60 * 60 * 1000)));
                     reservation.setRestaurantName(restaurant.getName());
                     restaurant.addReservation(reservation);
 

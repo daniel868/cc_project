@@ -21,7 +21,9 @@
 
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col" *ngFor="let reservation of transformedData">
-      <app-reservation-item [reservation]="reservation"></app-reservation-item>
+      <app-reservation-item [reservation]="reservation"
+                            [loadOnlyForCurrentCustomer]="loadOnlyCustomerReservation"
+      ></app-reservation-item>
     </div>
   </div>
 

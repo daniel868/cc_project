@@ -1,5 +1,6 @@
 package org.service.customer;
 
+import org.service.customer.model.Customer;
 import org.service.customer.pojo.CustomerDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
@@ -16,4 +17,6 @@ public interface CustomerService {
                             CustomerDto customerDto);
 
     CustomerDto loadCustomerById(Integer customerId);
+
+    Customer loadCustomerFromSession();
 }

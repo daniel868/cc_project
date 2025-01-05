@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {GuestAuthAction, LogoutAction, StartAuthRoleAction, StoreAuthRoleAction} from "./auth.actions";
 import {HttpClient} from "@angular/common/http";
 import {ROLE} from "../../../model/role";
+import {FinishFetchCurrentCustomer} from "../customer/customer.actions";
 
 @Injectable()
 export class AuthEffects {
@@ -23,7 +24,8 @@ export class AuthEffects {
         this.router.navigate(['/login'])
         return [
           GuestAuthAction({guestValue: true}),
-          StoreAuthRoleAction({userRoles: []})
+          StoreAuthRoleAction({userRoles: []}),
+          FinishFetchCurrentCustomer({customer: null})
         ]
       })
     )

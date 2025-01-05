@@ -29,6 +29,7 @@ export class ReservationEffects {
           .append('page', props.pageable.page)
           .append('size', props.pageable.size)
           .append('searchString', props.searchString)
+          .append('loadOnlyForCurrentCustomer', props.loadOnlyForCurrentCustomer)
         if (!!props.searchDate) {
           queryParams = queryParams.append('searchDate', props.searchDate)
         }
@@ -87,7 +88,8 @@ export class ReservationEffects {
                   page: environment.default_page_number
                 },
                 searchString: '',
-                searchDate: null
+                searchDate: null,
+                loadOnlyForCurrentCustomer: props.loadOnlyForCurrentCustomer
               })
             ]
           }),
@@ -116,7 +118,8 @@ export class ReservationEffects {
                   page: environment.default_page_number
                 },
                 searchString: '',
-                searchDate: null
+                searchDate: null,
+                loadOnlyForCurrentCustomer: props.loadOnlyForCurrentCustomer
               })
             ]
           }),

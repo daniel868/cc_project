@@ -10,10 +10,10 @@ import java.util.List;
 public interface ReservationService {
     PageableResponse<ReservationDto> findReservations(Pageable pageable,
                                                       String searchString,
-                                                      Long searchDateInMillis);
+                                                      Long searchDateInMillis,
+                                                      Boolean loadOnlyForCurrentCustomer);
 
-    ReservationDto createNewReservation(Integer customerId,
-                                        Integer restaurantId,
+    ReservationDto createNewReservation(Integer restaurantId,
                                         ReservationDto newReservation);
 
     boolean manageReservation(HttpMethod currentMethod,

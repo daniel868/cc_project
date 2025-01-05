@@ -5,7 +5,7 @@ import {Customer} from "../../../model/customer";
 export const StartFetchCurrentCustomer = createAction('[Customer] Start Fetch Current Customer');
 
 export const FinishFetchCurrentCustomer = createAction('[Customer] Finish Fetch Current Customer', props<{
-  customer: Customer
+  customer: Customer | null
 }>());
 
 export const UpdateCustomerAction = createAction('[Customer] Update Customer', props<{

@@ -34,7 +34,13 @@ const routes: Routes = [
       },
       {
         path: 'reservations',
-        component: ReservationComponent
+        component: ReservationComponent,
+        data: {loadOnlyCustomerReservation: false}
+      },
+      {
+        path: 'my-reservations',
+        component: ReservationComponent,
+        data: {loadOnlyCustomerReservation: true}
       }
     ]
   }

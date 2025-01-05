@@ -20,6 +20,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
   adminSubscription: Subscription = new Subscription();
 
+  isAuthenticated: boolean;
+
   constructor(private store: Store<AppState>,
               private authService: AuthService) {
   }
@@ -34,6 +36,8 @@ export class MainComponent implements OnInit, OnDestroy {
           this.isAdmin = !!roles.find(role => role.roleName === 'ADMIN')
         }
       });
+
+    this.isAuthenticated = this.authService.isAuthenticated()
 
     if (this.authService.isAuthenticated()) {
       this.store.dispatch(StartFetchCurrentCustomer())

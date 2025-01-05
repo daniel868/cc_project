@@ -26,11 +26,13 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final RestClient restClient;
     private final HttpServletRequest request;
+    private final HttpSession httpSession;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, RestClient restClient, HttpServletRequest request) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, RestClient restClient, HttpServletRequest request, HttpSession httpSession) {
         this.customerRepository = customerRepository;
         this.restClient = restClient;
         this.request = request;
+        this.httpSession = httpSession;
     }
 
     @Override
@@ -115,5 +117,16 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setEmailAddress(customerDto.getEmailAddress());
         customer.setName(customerDto.getName());
         customer.setPhoneNumber(customerDto.getPhoneNumber());
+    }
+
+    @Override
+    public Customer loadCustomerFromSession() {
+        Customer customer = null;
+        Integer customerId = (Integer) httpSession.getAttribute("customerId");
+        if (customerId != null) {
+            customer = customerRepository.findById(customerId)
+                    .orElse(null);
+        }
+        return customer;
     }
 }

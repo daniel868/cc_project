@@ -1,6 +1,7 @@
 package org.business.service;
 
 import ch.qos.logback.core.util.StringUtil;
+import jakarta.servlet.http.HttpSession;
 import org.business.exceptions.NotEnoughSpotsException;
 import org.business.model.Reservation;
 import org.business.model.Restaurant;
@@ -10,12 +11,11 @@ import org.business.repository.ReservationSpecification;
 import org.business.repository.RestaurantRepository;
 import org.business.utils.AppUtils;
 import org.business.utils.PageableResponse;
+import org.service.customer.CustomerService;
 import org.service.customer.model.Customer;
 import org.service.customer.repository.CustomerRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -28,12 +28,12 @@ import java.util.List;
 @Transactional
 public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
 
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository, CustomerRepository customerRepository, RestaurantRepository restaurantRepository) {
+    public ReservationServiceImpl(ReservationRepository reservationRepository, RestaurantRepository restaurantRepository, CustomerService customerService) {
         this.reservationRepository = reservationRepository;
-        this.customerRepository = customerRepository;
+        this.customerService = customerService;
         this.restaurantRepository = restaurantRepository;
     }
 
@@ -42,9 +42,13 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public PageableResponse<ReservationDto> findReservations(Pageable pageable,
                                                              String searchString,
-                                                             Long searchDateInMillis) {
+                                                             Long searchDateInMillis,
+                                                             Boolean loadOnlyForCurrentCustomer) {
         pageable = AppUtils.enhancePageable(pageable);
-        Page<Reservation> reservationPage = buildReservationSearchQuery(pageable, searchString, searchDateInMillis);
+        Page<Reservation> reservationPage = buildReservationSearchQuery(pageable,
+                searchString,
+                searchDateInMillis,
+                loadOnlyForCurrentCustomer);
 
         List<ReservationDto> payload = reservationPage.map(reservation -> ReservationDto.builder()
                         .id(reservation.getId())
@@ -61,7 +65,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     private Page<Reservation> buildReservationSearchQuery(Pageable pageable,
                                                           String searchString,
-                                                          Long searchDateInMillis) {
+                                                          Long searchDateInMillis,
+                                                          boolean loadCustomerFromSession
+    ) {
         Specification<Reservation> specification = Specification.where(null);
         if (!StringUtil.isNullOrEmpty(searchString)) {
             specification = specification.and(ReservationSpecification.guestNameOrRestaurantLike(searchString));
@@ -71,13 +77,17 @@ public class ReservationServiceImpl implements ReservationService {
             specification = specification.and(ReservationSpecification.reservationDateGraterOrEqualThan(searchDate));
         }
 
+        Customer customer = customerService.loadCustomerFromSession();
+        if (loadCustomerFromSession && customer!=null){
+            specification = specification.and(ReservationSpecification.withCustomerId(customer.getId()));
+        }
+
         return reservationRepository.findAll(specification, pageable);
     }
 
 
     @Override
-    public ReservationDto createNewReservation(Integer customerId,
-                                               Integer restaurantId,
+    public ReservationDto createNewReservation(Integer restaurantId,
                                                ReservationDto reservationDto) {
         Restaurant restaurant = restaurantRepository.loadRestaurantByIdWithReservation(restaurantId)
                 .orElse(null);
@@ -90,11 +100,7 @@ public class ReservationServiceImpl implements ReservationService {
             throw new NotEnoughSpotsException("Not enough spots for booking");
         }
 
-        Customer customer = null;
-        if (customerId != null) {
-            customer = customerRepository.findById(customerId)
-                    .orElse(null);
-        }
+        Customer customer = customerService.loadCustomerFromSession();
 
         Reservation reservation = new Reservation();
         if (customer != null) {

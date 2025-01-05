@@ -138,7 +138,7 @@ public class AuthController {
             }
 
             jwtToken = buildJwtToken(user.getUsername(), claims);
-            savedUser.setCustomerId(customerDto.getId());
+            savedUser.setCustomerId(response.getBody().getId());
 
             userService.saveUser(savedUser);
 

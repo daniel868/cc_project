@@ -46,6 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null && isWhiteListRequest(request)) {
+            httpSession.setAttribute("customerId", null);
             filterChain.doFilter(request, response);
             return;
         }

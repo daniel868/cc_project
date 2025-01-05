@@ -22,6 +22,9 @@ export class ReservationItemComponent implements OnInit, OnDestroy {
   @Input()
   reservation: Reservation;
 
+  @Input()
+  loadOnlyForCurrentCustomer: boolean;
+
   restaurant: Restaurant | null;
 
   restaurantSubscription: Subscription = new Subscription()
@@ -45,7 +48,8 @@ export class ReservationItemComponent implements OnInit, OnDestroy {
     if (!!this.reservation) {
       const initialState = {
         modalTitle: 'Edit Reservation',
-        reservation: reservation
+        reservation: reservation,
+        loadOnlyForCurrentCustomer: this.loadOnlyForCurrentCustomer
       };
 
       const modalOptions: ModalOptions = {
@@ -59,7 +63,10 @@ export class ReservationItemComponent implements OnInit, OnDestroy {
 
   onDeleteReservation(reservation: Reservation) {
     if (this.reservation && this.reservation.id) {
-      this.store.dispatch(DeleteReservationAction({reservationId: this.reservation.id}))
+      this.store.dispatch(DeleteReservationAction({
+        reservationId: this.reservation.id,
+        loadOnlyForCurrentCustomer: this.loadOnlyForCurrentCustomer
+      }))
     }
   }
 

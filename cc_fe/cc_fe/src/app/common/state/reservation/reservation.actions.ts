@@ -7,7 +7,8 @@ import {PageableGenericResponse} from "../../shared/pageable-generic-response";
 export const StartFetchReservationAction = createAction('[Reservation] Start Fetch Reservation', props<{
   pageable: PageableRequest,
   searchString: string,
-  searchDate: number | null
+  searchDate: number | null,
+  loadOnlyForCurrentCustomer: boolean
 }>())
 
 export const FinishFetchReservationAction = createAction('[Reservation] Finish Fetch Reservation', props<{
@@ -21,9 +22,11 @@ export const AddReservationAction = createAction('[Reservation] Add Reservation'
 
 export const UpdateReservationAction = createAction('[Reservation] Update Reservation', props<{
   payload: Reservation,
-  reservationId: number
+  reservationId: number,
+  loadOnlyForCurrentCustomer: boolean
 }>())
 
 export const DeleteReservationAction = createAction('[Reservation] Delete Reservation', props<{
-  reservationId: number
+  reservationId: number,
+  loadOnlyForCurrentCustomer: boolean
 }>())

@@ -13,10 +13,12 @@ public class RestaurantSpecification {
     public static Specification<Restaurant> nameOrAddressLike(String searchString) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.or(
                 criteriaBuilder.like(
-                        root.get("name"), "%" + searchString + "%"
+                       criteriaBuilder.lower(root.get("name")),
+                        "%" + searchString.toLowerCase() + "%"
                 ),
                 criteriaBuilder.like(
-                        root.get("address"), "%" + searchString + "%"
+                       criteriaBuilder.lower(root.get("address")),
+                        "%" + searchString.toLowerCase() + "%"
                 )
         );
     }

@@ -31,15 +31,16 @@ public class ReservationController {
     @GetMapping("")
     public PageableResponse<ReservationDto> getAllReservations(Pageable pageable,
                                                                @RequestParam(value = "searchString", required = false) String searchString,
-                                                               @RequestParam(value = "searchDate", required = false) Long searchDate
+                                                               @RequestParam(value = "searchDate", required = false) Long searchDate,
+                                                               @RequestParam(value = "loadOnlyForCurrentCustomer") Boolean loadOnlyForCurrentCustomer
     ) {
-        return reservationService.findReservations(pageable, searchString, searchDate);
+        return reservationService.findReservations(pageable, searchString, searchDate, loadOnlyForCurrentCustomer);
     }
 
     @PostMapping(value = "/{restaurantId}")
     public ResponseEntity<ReservationDto> addNewReservation(@PathVariable("restaurantId") Integer restaurantId,
                                                             @RequestBody ReservationDto newReservation) {
-        ReservationDto reservation = reservationService.createNewReservation(null, restaurantId, newReservation);
+        ReservationDto reservation = reservationService.createNewReservation(restaurantId, newReservation);
         return ResponseEntity.ok()
                 .body(reservation);
     }
